@@ -33,6 +33,52 @@ from difflib import SequenceMatcher
 
 from api_rubika import Bot,encryption
 
+def hasAds(msg):
+	links = ["rubika.ir/"] # you can develop it
+	for i in links:
+		if i in msg.lower():
+			return True
+
+
+def searchUserInGroup(guid):
+	user = bot.getUserInfo(guid)["data"]["user"]["username"]
+	members = bot.getGroupAllMembers(user,target)["in_chat_members"]
+	if members != [] and members[0]["username"] == user:
+		return True
+	
+	
+
+# static variable
+answered, sleeped, retries = [], False, {}
+
+# option lists
+blacklist, exemption, auto_lock , no_alerts , no_stars =  [] , [] , False , [] , []
+alerts, stars = {} , {}
+auto_lock , locked , gif_lock = False , False , False
+
+
+# alert function
+def alert(guid,user,alert_text=""):
+	no_alerts.append(guid)
+	alert_count = int(no_alerts.count(guid))
+
+	alerts[user] = alert_count
+
+	max_alert = 5    # you can change it
+
+
+	if alert_count == max_alert:
+		blacklist.append(guid)
+		bot.sendMessage(target, "\n 🚫 کاربر [ @"+user+" ] \n ("+ str(max_alert) +") اخطار دریافت کرد ، بنابراین اکنون اخراج میشود .", msg["message_id"])
+		bot.banGroupMember(target, guid)
+		return
+
+	for i in range(max_alert):
+		no = i+1
+		if alert_count == no:
+			bot.sendMessage(target, "💢 اخطار [ @"+user+" ] \n\n"+ str(alert_text) +" شما ("+ str(no) +"/"+ str(max_alert) +") اخطار دریافت کرده اید .\n\nپس از دریافت "+ str(max_alert) +" اخطار ، از گروه اخراج خواهید شد .", msg["message_id"])
+			return
+
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
