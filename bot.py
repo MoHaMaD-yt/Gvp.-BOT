@@ -585,7 +585,7 @@ def get_leaved(text,chat,bot):
 def get_added(text,chat,bot):    
     try:
         group = chat['abs_object']['title']
-        send_text = 'سلام دا به ' + group + ' خوش اومدی 🤡 ❤ \n لطفا قوانین رو تو بیو گپ بخون و رعایت کن ✅'
+        send_text = 'سلام دا به ' + group + ' خوش اومدی 🤡  \n لطفا کلمه (قوا.نین) رو ارسال کن و مطالعه کن ✅'
         bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
     except:
         print('rub server err')
@@ -593,7 +593,7 @@ def get_added(text,chat,bot):
 def get_help(text,chat,bot):                                
     text = open('help.txt','r').read()
     if chat['abs_object']['type'] == 'Group':
-        bot.sendMessage(chat['object_guid'], 'سید نتیجه رو پی ویت فرستادم 👺', chat['last_message']['message_id'])
+        bot.sendMessage(chat['object_guid'], 'نتیجه رو پی ویت فرستادم 👺', chat['last_message']['message_id'])
         bot.sendMessage(chat['last_message']['author_object_guid'], text)                                        
     elif chat['abs_object']['type'] == 'User':
         bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
@@ -688,7 +688,7 @@ while(2 > 1):
                             if text == '!start':
                                 print('message geted and sinned')
                                 try:
-                                    bot.sendMessage(chat['object_guid'], 'سلام سید به بات مولایی Gvp خوش اومدی 🤡 \n  ❤\n\n برای استفاده از ربات باید در کانال @GTA_V_Page عضو باشی بعدش  \nدستورات \nرو بفرست',chat['last_message']['message_id'])
+                                    bot.sendMessage(chat['object_guid'], 'سلام دا به بات مولایی Gvp خوش اومدی 🤡 \n  \n\n برای استفاده از ربات باید در کانال @GTA_V_Page عضو باشی بعدش  \nدستورات \nرو بفرست',chat['last_message']['message_id'])
                                     print('sended response')    
                                 except:
                                     print('server bug1')
