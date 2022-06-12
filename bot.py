@@ -33,43 +33,6 @@ from difflib import SequenceMatcher
 
 from api_rubika import Bot,encryption
 
-def hasAds(msg):
-	links = ["http://","https://",".ir",".com",".org",".net",".me"]
-	for i in links:
-		if i in msg:
-			return True
-			
-def hasInsult(msg):
-	swData = [False,None]
-	for i in open("dontReadMe.txt").read().split("\n"):
-		if i in msg:
-			swData = [True, i]
-			break
-		else: continue
-	return swData
-	
-# static variable
-answered, sleeped, retries = [], False, {}
-
-alerts, blacklist = [] , []
-
-def alert(guid,user,link=False):
-	alerts.append(guid)
-	coun = int(alerts.count(guid))
-
-	haslink = ""
-	if link : haslink = "گذاشتن لینک در گروه ممنوع می باشد !\n\n"
-
-	if coun == 1:
-		bot.sendMessage(target, "💢 اخطار [ @"+user+" ] \n"+haslink+" شما (1/3) اخطار دریافت کرده اید .\n\nپس از دریافت 3 اخطار از گروه حذف خواهید شد !\nجهت اطلاع از قوانین کلمه (قوانین) را ارسال کنید .")
-	elif coun == 2:
-		bot.sendMessage(target, "💢 اخطار [ @"+user+" ] \n"+haslink+" شما (2/3) اخطار دریافت کرده اید .\n\nپس از دریافت 3 اخطار از گروه حذف خواهید شد !\nجهت اطلاع از قوانین کلمه (قوانین) را ارسال کنید .")
-
-	elif coun == 3:
-		blacklist.append(guid)
-		bot.sendMessage(target, "🚫 کاربر [ @"+user+" ] \n (3/3) اخطار دریافت کرد ، بنابراین اکنون اخراج میشود .")
-		bot.banGroupMember(target, guid)
-
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
