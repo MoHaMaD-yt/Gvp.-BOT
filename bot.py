@@ -711,6 +711,25 @@ while(2 > 1):
                                         print('server bug2')
                                 except:
                                     print('server bug3')
+				elif hasInsult(msg.get("text"))[0] and not msg.get("author_object_guid") in admins :
+							try:
+								print("yek ahmagh fohsh dad")
+								bot.deleteMessages(target, [str(msg.get("message_id"))])
+								print("fohsh pak shod")
+							except:
+								print("err del fohsh Bug")
+								
+						elif msg.get("text").startswith("سلام") or msg.get("text").startswith("سلم") or msg.get("text").startswith("صلام") or msg.get("text").startswith("صلم") or msg.get("text").startswith("سیلام") or msg.get("text").startswith("صیلام"):
+							try:
+								bot.sendMessage(target,'سلام عشــقم' ,message_id=msg.get("message_id"))
+							except:
+								print("err hello")
+								
+						elif msg.get("text").startswith("خوبی") or msg.get("text").startswith("خبی"):
+							try:
+								bot.sendMessage(target, "نه تو خوبـی؟", message_id=msg.get("message_id"))
+							except:
+								print("err answer hay")
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
