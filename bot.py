@@ -958,19 +958,6 @@ while(2 > 1):
                                 tawd40 = Thread(target=anti_tabligh, args=(text, chat, bot,))
                                 tawd40.start()
                                 list_message_seened.append(m_id)
-		   elif msg.get("text") == "/lock" and msg.get("author_object_guid") in admins :
-							try:
-								bot.setMembersAccess(target, ["AddMember"])
-								bot.sendMessage(target, "🔒 The group was locked !\n📍 To open the group, please send the /unlock command.\n@Belectron_bot", message_id=msg.get("message_id"))
-							except:
-								print("err lock GP")
-
-						elif msg.get("text") == "/unlock" or msg.get("text") == "باز کردن گروه" and msg.get("author_object_guid") in admins :
-							try:
-								bot.setMembersAccess(target, ["SendMessages","AddMember"])
-								bot.sendMessage(target, "🔓 The group is now open !", message_id=msg.get("message_id"))
-							except:
-								print("err unlock GP")
         else:
             print('no update ')
     except:
