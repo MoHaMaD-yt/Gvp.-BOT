@@ -577,7 +577,7 @@ def get_font_fa(text,chat,bot):
 
 def get_leaved(text,chat,bot):
     try:
-        send_text = 'چرا رفتی یهود 😐'
+        send_text = ':('
         bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
     except:
         print('rub server err')
@@ -585,7 +585,7 @@ def get_leaved(text,chat,bot):
 def get_added(text,chat,bot):    
     try:
         group = chat['abs_object']['title']
-        send_text = 'سلام دا به ' + group + ' خوش اومدی 🤡  \n لطفا کلمه (قوا.نین) رو ارسال کن و مطالعه کن ✅'
+        send_text = 'سلام سید به' + group + 'خوش اومدی 🖐 \n 🔹 لطفا کلمه (قوانین) رو ارسال کن و قوانین رو مطالعه کن \n برای اینکه بتونی از ربات استفاده کنی باید در کانال های زیر عضو باشی :) \n 🆔 @GTA_V_Page \n 🆔 @OVER_GAMES \n بعد از اینکه عضو شدی کلمه (دستورات) رو ارسال کن تا لیست دستورات ربات برات ارسال بشه ❗'
         bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
     except:
         print('rub server err')
@@ -593,7 +593,7 @@ def get_added(text,chat,bot):
 def get_help(text,chat,bot):                                
     text = open('help.txt','r').read()
     if chat['abs_object']['type'] == 'Group':
-        bot.sendMessage(chat['object_guid'], 'نتیجه رو پی ویت فرستادم 👺', chat['last_message']['message_id'])
+        bot.sendMessage(chat['object_guid'], 'سید نتیجه رو پی ویت فرستادم 👺', chat['last_message']['message_id'])
         bot.sendMessage(chat['last_message']['author_object_guid'], text)                                        
     elif chat['abs_object']['type'] == 'User':
         bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
@@ -688,7 +688,7 @@ while(2 > 1):
                             if text == '!start':
                                 print('message geted and sinned')
                                 try:
-                                    bot.sendMessage(chat['object_guid'], 'سلام دا به بات مولایی Gvp خوش اومدی 🤡 \n  \n\n برای استفاده از ربات باید در کانال @GTA_V_Page عضو باشی بعدش  \nدستورات \nرو بفرست',chat['last_message']['message_id'])
+                                    bot.sendMessage(chat['object_guid'], 'سلام سید 🖐 \n 🔹 به سرویس ربات Gvp خوش اومدی /n دوست عزیز برای استفاده از ربات باید در کانال های زیر عضو باشی :) \n 🆔 @GTA_V_Page \n 🆔 @OVER_GAMES \n بعد از عضو شدن دستور (!help) رو ارسال کن تا لیست دستورات ربات ارسال بشه ❗ n\ 🔻 برای اینکه دریافت بروزرسانی ها و وضعیت ربات در کانال پشتیبانی ربات عضو باشید: \n 🆔 @Gvp_BOT',chat['last_message']['message_id'])
                                     print('sended response')    
                                 except:
                                     print('server bug1')
@@ -754,7 +754,7 @@ while(2 > 1):
                             elif text.startswith('دانش'):
                                 tawd30 = Thread(target=get_danesh, args=(text, chat, bot,))
                                 tawd30.start()
-                            elif text.startswith('جوکک'):
+                            elif text.startswith('جک'):
                                 tawd24 = Thread(target=get_pa_na_pa, args=(text, chat, bot,))
                                 tawd24.start()
                             elif text.startswith('کصشر'):
@@ -794,7 +794,7 @@ while(2 > 1):
                                 try:
                                     search = text[10:-1]
                                     if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':
-                                        bot.sendMessage(chat['object_guid'], 'نتایج کامل به زودی به پیوی شما ارسال میشوند', chat['last_message']['message_id'])                           
+                                        bot.sendMessage(chat['object_guid'], 'نتایج کامل به زودی به پیوی شما ارسال میشوند دا', chat['last_message']['message_id'])                           
                                         jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
                                         jd = jd['search']
                                         a = 0
@@ -909,7 +909,7 @@ while(2 > 1):
                             elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasAds(text) == True:
                                 tawd14 = Thread(target=anti_tabligh, args=(text, chat, bot,))
                                 tawd14.start()
-                            elif text.startswith('دستورات'):
+                            elif text.startswith('!help'):
                                 tawd38 = Thread(target=get_help, args=(text, chat, bot,))
                                 tawd38.start()
                             elif text.startswith('!usvl_start') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '':
