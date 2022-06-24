@@ -751,7 +751,7 @@ while(2 > 1):
                             elif text.startswith('خاطره'):
                                 tawd29 = Thread(target=get_khatere, args=(text, chat, bot,))
                                 tawd29.start()
-                            elif text.startswith('دانش'):
+                            elif text.startswith('منطقیه'):
                                 tawd30 = Thread(target=get_danesh, args=(text, chat, bot,))
                                 tawd30.start()
                             elif text.startswith('جک'):
