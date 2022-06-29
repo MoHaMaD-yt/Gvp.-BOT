@@ -713,12 +713,6 @@ while(2 > 1):
                                         print('server bug2')
                                 except:
                                     print('server bug3')
-			    elif msg.get("text").startswith("دیالوگ"):
-				try:
-				    response = get("http://api.codebazan.ir/dialog/").text
-				    bot.sendMessage(target, response,message_id=msg.get("message_id"))
-				except:
-					bot.sendMessage(target, "There was a problem!", message_id=msg["message_id"])
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
