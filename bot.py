@@ -713,11 +713,6 @@ while(2 > 1):
                                         print('server bug2')
                                 except:
                                     print('server bug3')
-			    elif msg.get("text").startswith("😂") or msg.get("text").startswith("🤣"):
-				try:
-				    bot.sendMessage(target, "خنده مکنی کونکش؟ 🤡", message_id=msg.get("message_id"))
-				    except:
-					print("err luagh")
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
