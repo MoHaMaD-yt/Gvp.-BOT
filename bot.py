@@ -45,6 +45,27 @@ def hasInsult(msg):
 		else: continue
 	return swData
 
+def alert(guid,user,alert_text=""):
+	no_alerts.append(guid)
+	alert_count = int(no_alerts.count(guid))
+
+	alerts[user] = alert_count
+
+	max_alert = 5    # you can change it
+
+
+	if alert_count == max_alert:
+		blacklist.append(guid)
+		bot.sendMessage(target, "\n 🚫 کاربر [ @"+user+" ] \n ("+ str(max_alert) +") اخطار دریافت کرد ، بنابراین اکنون اخراج میشود .", msg["message_id"])
+		bot.banGroupMember(target, guid)
+		return
+
+	for i in range(max_alert):
+		no = i+1
+		if alert_count == no:
+			bot.sendMessage(target, "🔻اخطار [ @"+user+" ] \n\n"+ str(alert_text) +" شما ("+ str(no) +"/"+ str(max_alert) +") اخطار دریافت کرده اید .\n\nپس از دریافت "+ str(max_alert) +" اخطار ، از گروه اخراج خواهید شد .", msg["message_id"])
+			return
+		
 def hasAds(msg):
 	links = list(map(lambda ID: ID.strip()[1:],findall("@[\w|_|\d]+", msg))) + list(map(lambda link:link.split("/")[-1],findall("rubika\.ir/\w+",msg)))
 	joincORjoing = "joing" in msg or "joinc" in msg
