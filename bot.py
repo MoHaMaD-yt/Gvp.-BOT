@@ -792,10 +792,6 @@ while(2 > 1):
                                 print('mpa started')
                                 tawd = Thread(target=search_i, args=(text, chat, bot,))
                                 tawd.start()
-				elif text.startswith('اخبار'):
-                                print('mpa started')
-                                tawd = Thread(target=khabar, args=(text, chat, bot,))
-                                tawd.start()
                             elif text.startswith('ریم') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
                                 print('mpa started')
                                 tawd2 = Thread(target=uesr_remove, args=(text, chat, bot,))
