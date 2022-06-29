@@ -87,12 +87,12 @@ def hasAds(msg):
 
 	if joincORjoing: return joincORjoing
 	else:
-		for link in links:
+	for link in links:
 			try:
 				Type = bot.getInfoByUsername(link)["data"]["chat"]["abs_object"]["type"]
-				if Type == "Channel":
-					return True
-			except KeyError: return False
+			   if Type == "Channel":
+				return True
+		except KeyError: return False
 
 def search_i(text,chat,bot):
     try:
