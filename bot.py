@@ -35,6 +35,19 @@ from difflib import SequenceMatcher
 
 from api_rubika import Bot,encryption
 
+def hasAds(msg):
+	links = ["rubika.ir/"] # you can develop it
+	for i in links:
+		if i in msg.lower():
+			return True
+
+
+def searchUserInGroup(guid):
+	user = bot.getUserInfo(guid)["data"]["user"]["username"]
+	members = bot.getGroupAllMembers(user,target)["in_chat_members"]
+	if members != [] and members[0]["username"] == user:
+		return True
+	
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
