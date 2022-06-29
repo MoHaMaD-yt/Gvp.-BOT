@@ -36,10 +36,17 @@ from difflib import SequenceMatcher
 from api_rubika import Bot,encryption
 
 def hasAds(msg):
-	links = ["rubika.ir/"] # you can develop it
-	for i in links:
-		if i in msg.lower():
-			return True
+	links = list(map(lambda ID: ID.strip()[1:],findall("@[\w|_|\d]+", msg))) + list(map(lambda link:link.split("/")[-1],findall("rubika\.ir/\w+",msg)))
+	joincORjoing = "joing" in msg or "joinc" in msg
+
+	if joincORjoing: return joincORjoing
+	else:
+		for link in links:
+			try:
+				Type = bot.getInfoByUsername(link)["data"]["chat"]["abs_object"]["type"]
+				if Type == "Channel":
+					return True
+			except KeyError: return False
 
 
 def searchUserInGroup(guid):
@@ -59,13 +66,6 @@ def hasInsult(msg):
 			break
 		else: continue
 	return swData
-
-def khabar(text,chat,bot):					
-    try:
-	response = get("https://api.codebazan.ir/khabar/?kind=iran").text
-	bot.sendMessage(target, response,message_id=msg.get("message_id"))
-		    except:
-			   bot.sendMessage(target, "اشتباه وارد کردی دستورو عشقم", message_id=msg["message_id"])
 								
 def search_i(text,chat,bot):
     try:
