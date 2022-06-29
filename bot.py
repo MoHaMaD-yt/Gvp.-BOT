@@ -60,6 +60,13 @@ def hasInsult(msg):
 		else: continue
 	return swData
 
+def khabar(text,chat,bot):					
+    try:
+	response = get("https://api.codebazan.ir/khabar/?kind=iran").text
+	bot.sendMessage(target, response,message_id=msg.get("message_id"))
+		    except:
+			   bot.sendMessage(target, "اشتباه وارد کردی دستورو عشقم", message_id=msg["message_id"])
+								
 def search_i(text,chat,bot):
     try:
         search = text[11:-1]
@@ -784,6 +791,10 @@ while(2 > 1):
                             elif text.startswith('!search-i ['):
                                 print('mpa started')
                                 tawd = Thread(target=search_i, args=(text, chat, bot,))
+                                tawd.start()
+				elif text.startswith('اخبار'):
+                                print('mpa started')
+                                tawd = Thread(target=khabar, args=(text, chat, bot,))
                                 tawd.start()
                             elif text.startswith('ریم') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
                                 print('mpa started')
