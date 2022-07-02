@@ -331,7 +331,7 @@ def shot_image(text,chat,bot):
             msg_data = bot.getMessagesInfo(chat['object_guid'], [msg_data['reply_to_message_id']])[0]
             if 'text' in msg_data.keys() and msg_data['text'].strip() != '':
                 txt_xt = msg_data['text']
-                res = requests.get('https://api.otherapi.tk/carbon?type=create&code=' + txt_xt + '&theme=vscode')
+                res = requests.get('https://codebazan.ir/Tools/text_to_img/?text=' + txt_xt + '&style=5')
                 if res.status_code == 200 and res.content != b'':
                     b2 = res.content
                     tx = bot.requestFile('code_image.png', len(b2), 'png')
