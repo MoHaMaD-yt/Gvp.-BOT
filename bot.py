@@ -673,7 +673,16 @@ def get_backup(text,chat,bot):
         bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
     except:
         print('back err')
-	
+
+def hadisp(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/hadis/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -842,6 +851,9 @@ while(2 > 1):
                             elif text.startswith('طلا'):
                                 tawd22 = Thread(target=get_gold, args=(text, chat, bot,))
                                 tawd22.start()
+			    elif text.startswith('حدیث'):
+                                tawd45 = Thread(target=hadisp, args=(text, chat, bot,))
+                                tawd45.start() 	
                             elif text.startswith('!ping ['):
                                 tawd21 = Thread(target=get_ping, args=(text, chat, bot,))
                                 tawd21.start()
