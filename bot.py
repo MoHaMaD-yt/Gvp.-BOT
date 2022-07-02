@@ -716,6 +716,16 @@ def get_royal(text,chat,bot):
         print('code bz server err')
         return False
 
+def get_famil(text,chat,bot):
+    try:
+        site = text[7:-1]
+        jd = requests.get('https://api.codebazan.ir/esm-famil/?text=' + site).text
+        text = str(jd)
+        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+    except:
+        print('code bz ping err')
+    return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -766,6 +776,9 @@ while(2 > 1):
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
+			    elif text.startswith('!esfa ['):
+                                tawd50 = Thread(target=get_famil, args=(text, chat, bot,))
+                                tawd50.start()
                             elif text.startswith('!search ['):
                                 tawd11 = Thread(target=search, args=(text, chat, bot,))
                                 tawd11.start()
