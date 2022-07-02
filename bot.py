@@ -403,18 +403,13 @@ def get_ping(text,chat,bot):
     return True
 
 def get_gold(text,chat,bot):
-    try:
-        r = json.loads(requests.get('https://www.wirexteam.ga/gold').text)
-        change = str(r['data']['last_update'])
-        r = r['gold']
-        text = ''
-        for o in r:
-            text += o['name'] + ' : ' + o['nerkh_feli'] + '\n'
-        text += '\n\nآخرین تغییر : ' + change
-        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/hadis/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
     except:
-        print('gold server err')
-    return True
+        print('code bz server err')
+        return False
 
 def get_wiki(text,chat,bot):
     try:
