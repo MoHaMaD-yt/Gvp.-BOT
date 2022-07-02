@@ -726,6 +726,16 @@ def get_famil(text,chat,bot):
         print('code bz ping err')
     return False
 
+def get_kodmel(text,chat,bot):
+    try:
+        site = text[7:-1]
+        jd = requests.get('https://api.codebazan.ir/codemelli/?code=' + site).text
+        text = str(jd)
+        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+    except:
+        print('code bz ping err')
+    return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -892,35 +902,9 @@ while(2 > 1):
                                     bot.sendMessage(chat['object_guid'], 'اضافه شد' , chat['last_message']['message_id'])                         
                                 except:
                                     print('add not successd')  
-                            elif text.startswith('!math ['):
-                                try:
-                                    amal_and_value = text[7:-1]
-                                    natije = ''
-                                    if amal_and_value.count('*') == 1:
-                                        value1 = float(amal_and_value.split('*')[0].strip())
-                                        value2 = float(amal_and_value.split('*')[1].strip())
-                                        natije = value1 * value2
-                                    elif amal_and_value.count('/') > 0:
-                                        value1 = float(amal_and_value.split('/')[0].strip())
-                                        value2 = float(amal_and_value.split('/')[1].strip())
-                                        natije = value1 / value2
-                                    elif amal_and_value.count('+') > 0:
-                                        value1 = float(amal_and_value.split('+')[0].strip())
-                                        value2 = float(amal_and_value.split('+')[1].strip())
-                                        natije = value1 + value2
-                                    elif amal_and_value.count('-') > 0:
-                                        value1 = float(amal_and_value.split('-')[0].strip())
-                                        value2 = float(amal_and_value.split('-')[1].strip())
-                                        natije = value1 - value2
-                                    elif amal_and_value.count('**') > 0:
-                                        value1 = float(amal_and_value.split('**')[0].strip())
-                                        value2 = float(amal_and_value.split('**')[1].strip())
-                                        natije = value1 ** value2
-                                    
-                                    if natije != '':
-                                        bot.sendMessage(chat['object_guid'], natije , chat['last_message']['message_id'])
-                                except:
-                                    print('math err')  
+                            elif text.startswith('!kod ['):
+                                tawd51 = Thread(target=get_kodmel, args=(text, chat, bot,))
+                                tawd51.start()  
                             elif text.startswith('شات'):
                                 tawd16 = Thread(target=shot_image, args=(text, chat, bot,))
                                 tawd16.start()
