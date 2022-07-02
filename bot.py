@@ -673,17 +673,7 @@ def get_backup(text,chat,bot):
         bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
     except:
         print('back err')
-
-	def get_masafat(text,chat,bot):
-    try:
-        site = text[7:-1]
-        jd = requests.get('https://api.codebazan.ir/owghat/?city=' + site).text
-        text = str(jd)
-        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
-    except:
-        print('code bz ping err')
-    return True
-
+	
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -855,9 +845,6 @@ while(2 > 1):
                             elif text.startswith('!ping ['):
                                 tawd21 = Thread(target=get_ping, args=(text, chat, bot,))
                                 tawd21.start()
-				elif text.startswith('!masa ['):
-                                tawd45 = Thread(target=get_masafat, args=(text, chat, bot,))
-                                tawd45.start()
                             elif text.startswith('!font ['):
                                 tawd20 = Thread(target=get_font, args=(text, chat, bot,))
                                 tawd20.start()
