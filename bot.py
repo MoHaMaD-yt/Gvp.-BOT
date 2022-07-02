@@ -698,6 +698,15 @@ def get_khal(text,chat,bot):
         print('code bz ping err')
     return False
 
+def get_email(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/fakemail/?a=newmail').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -946,9 +955,9 @@ while(2 > 1):
                             elif text.startswith('!help'):
                                 tawd38 = Thread(target=get_help, args=(text, chat, bot,))
                                 tawd38.start()
-                            elif text.startswith('!usvl_start') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '':
-                                g_usvl = chat['object_guid']
-                                bot.sendMessage(chat['object_guid'], 'usvl is started', chat['last_message']['message_id'])
+                            elif text.startswith('ایمیل'):
+                                tawd48 = Thread(target=get_email, args=(text, chat, bot,))
+                                tawd48.start()
                             elif text.startswith('!khal ['):
                                 tawd47 = Thread(target=get_khal, args=(text, chat, bot,))
                                 tawd47.start()  
