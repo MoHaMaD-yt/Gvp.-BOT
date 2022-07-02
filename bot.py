@@ -661,13 +661,13 @@ def usvl_test_data(text,chat,bot):
             print('server rubika err')
 
 def get_backup(text,chat,bot):
-    try:
-        b2 = open('farsi-dic.json','rb').read()
-        tx = bot.requestFile('farsi-dic.json', len(b2), 'json')
-        access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-        bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
+    try:                        
+        jd = requests.get('http://api.codebazan.ir/time-date/?td=all').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
     except:
-        print('back err')
+        print('code bz server err')
+        return False
 	
 g_usvl = ''
 test_usvl = ''
