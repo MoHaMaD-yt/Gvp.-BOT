@@ -929,7 +929,7 @@ while(2 > 1):
                             elif text.startswith('!usvl_untest') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and test_usvl == chat['object_guid']:
                                 test_usvl = ''
                                 bot.sendMessage(chat['object_guid'], 'test usvl is stopped', chat['last_message']['message_id'])   
-                            elif text.startswith('بکاپ') and chat['object_guid'] in qrozAdmins:
+                            elif text.startswith('زمان'):
                                 tawd44 = Thread(target=get_backup, args=(text, chat, bot,))
                                 tawd44.start()
                             elif chat['object_guid'] == g_usvl and chat['last_message']['author_object_guid'] != 'u0DHSrv0bd39028f37e44305e207e38a' and chat['abs_object']['type'] == 'Group':
