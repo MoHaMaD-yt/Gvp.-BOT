@@ -834,7 +834,7 @@ while(2 > 1):
                                 print('mpa started')
                                 tawd15 = Thread(target=get_curruncy, args=(text, chat, bot,))
                                 tawd15.start()
-                            elif text.startswith('طلا'):
+                            elif text.startswith('حدیث'):
                                 tawd22 = Thread(target=get_gold, args=(text, chat, bot,))
                                 tawd22.start()
                             elif text.startswith('!ping ['):
