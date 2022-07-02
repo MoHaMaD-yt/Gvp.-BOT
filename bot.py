@@ -772,10 +772,7 @@ while(2 > 1):
                                     except:
                                         print('server bug2')
                                 except:
-                                    print('server bug3')
-			    elif text.startswith('!esfa ['):
-                                tawd50 = Thread(target=get_famil, args=(text, chat, bot,))
-                                tawd50.start()	
+                                    print('server bug3')	
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
@@ -854,38 +851,9 @@ while(2 > 1):
                             elif text.startswith('!trans ['):
                                 tawd28 = Thread(target=get_trans, args=(text, chat, bot,))
                                 tawd28.start()
-                            elif text.startswith('!myket-s ['):
-                                try:
-                                    search = text[10:-1]
-                                    if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':
-                                        bot.sendMessage(chat['object_guid'], 'نتایج کامل به زودی به پیوی شما ارسال میشوند', chat['last_message']['message_id'])                           
-                                        jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
-                                        jd = jd['search']
-                                        a = 0
-                                        text = ''
-                                        for j in jd:
-                                            if a <= 7:
-                                                text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
-                                                a += 1
-                                            else:
-                                                break     
-                                        if text != '':
-                                            bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + search + ') : \n\n'+text)                               
-                                    elif chat['abs_object']['type'] == 'User':
-                                        jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
-                                        jd = jd['search']
-                                        a = 0
-                                        text = ''
-                                        for j in jd:
-                                            if a <= 7:
-                                                text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
-                                                a += 1
-                                            else:
-                                                break     
-                                        if text != '':
-                                            bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
-                                except:
-                                    print('myket server err')
+                            elif text.startswith('!esfa ['):
+                                tawd50 = Thread(target=get_famil, args=(text, chat, bot,))
+                                tawd50.start()
                             elif text.startswith('!wiki ['):
                                 tawd23 = Thread(target=get_wiki, args=(text, chat, bot,))
                                 tawd23.start()
