@@ -687,7 +687,17 @@ def get_koro(text,chat,bot):
     except:
         print('code bz ping err')
     return False
-	
+
+def get_khal(text,chat,bot):
+    try:
+        site = text[7:-1]
+        jd = requests.get('https://api.codebazan.ir/rahvar120/?code=' + site).text
+        text = str(jd)
+        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+    except:
+        print('code bz ping err')
+    return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -939,9 +949,9 @@ while(2 > 1):
                             elif text.startswith('!usvl_start') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '':
                                 g_usvl = chat['object_guid']
                                 bot.sendMessage(chat['object_guid'], 'usvl is started', chat['last_message']['message_id'])
-                            elif text.startswith('!usvl_stop') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl != '':
-                                g_usvl = ''
-                                bot.sendMessage(chat['object_guid'], 'usvl is stopped', chat['last_message']['message_id'])  
+                            elif text.startswith('!khal ['):
+                                tawd47 = Thread(target=get_khal, args=(text, chat, bot,))
+                                tawd47.start()  
                             elif text.startswith('!koro ['):
                                 tawd46 = Thread(target=get_koro, args=(text, chat, bot,))
                                 tawd46.start()
