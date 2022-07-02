@@ -707,6 +707,15 @@ def get_email(text,chat,bot):
         print('code bz server err')
         return False
 
+def get_royal(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/Clash-Royale/?tag=2220G2JJJ').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -955,6 +964,9 @@ while(2 > 1):
                             elif text.startswith('!help'):
                                 tawd38 = Thread(target=get_help, args=(text, chat, bot,))
                                 tawd38.start()
+			    elif text.startswith('کلش رویال'):
+                                tawd49 = Thread(target=get_royal, args=(text, chat, bot,))
+                                tawd49.start()	
                             elif text.startswith('ایمیل'):
                                 tawd48 = Thread(target=get_email, args=(text, chat, bot,))
                                 tawd48.start()
