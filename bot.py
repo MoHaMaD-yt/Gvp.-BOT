@@ -754,6 +754,9 @@ while(2 > 1):
                                     print('sended response')    
                                 except:
                                     print('server bug1')
+			    elif text.startswith('!esfa ['):
+                                tawd50 = Thread(target=get_famil, args=(text, chat, bot,))
+                                tawd50.start()
                             elif text.startswith('!nim http://') == True or text.startswith('!nim https://') == True:
                                 try:
                                     bot.sendMessage(chat['object_guid'], "در حال آماده سازی لینک ...",chat['last_message']['message_id'])
@@ -776,9 +779,6 @@ while(2 > 1):
                             elif text.startswith('!info @'):
                                 tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
                                 tawd10.start()
-			    elif text.startswith('!esfa ['):
-                                tawd50 = Thread(target=get_famil, args=(text, chat, bot,))
-                                tawd50.start()
                             elif text.startswith('!search ['):
                                 tawd11 = Thread(target=search, args=(text, chat, bot,))
                                 tawd11.start()
