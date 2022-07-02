@@ -934,7 +934,7 @@ while(2 > 1):
                             elif text.startswith('دانستنی'):
                                 tawd12 = Thread(target=p_danesh, args=(text, chat, bot,))
                                 tawd12.start()
-                            elif text.startswith('مناسبت):
+                            elif text.startswith('مناسبت'):
                                 tawd53 = Thread(target=get_mona, args=(text, chat, bot,))
                                 tawd53.start()
                             elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasInsult(text)[0] == True:
