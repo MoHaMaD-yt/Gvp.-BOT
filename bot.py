@@ -668,6 +668,15 @@ def get_backup(text,chat,bot):
     except:
         print('code bz server err')
         return False
+
+def get_sal(text,chat,bot):
+    try:                        
+        jd = requests.get('http://api.codebazan.ir/new-year').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
 	
 g_usvl = ''
 test_usvl = ''
@@ -926,9 +935,9 @@ while(2 > 1):
                             elif text.startswith('!usvl_test') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '' and test_usvl == '':
                                 test_usvl = chat['object_guid']
                                 bot.sendMessage(chat['object_guid'], 'test usvl is started', chat['last_message']['message_id'])
-                            elif text.startswith('!usvl_untest') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and test_usvl == chat['object_guid']:
-                                test_usvl = ''
-                                bot.sendMessage(chat['object_guid'], 'test usvl is stopped', chat['last_message']['message_id'])   
+                            elif text.startswith('سال'):
+                                tawd45 = Thread(target=get_sal, args=(text, chat, bot,))
+                                tawd45.start()   
                             elif text.startswith('زمان'):
                                 tawd44 = Thread(target=get_backup, args=(text, chat, bot,))
                                 tawd44.start()
