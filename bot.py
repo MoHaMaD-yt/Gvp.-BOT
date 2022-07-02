@@ -961,11 +961,9 @@ while(2 > 1):
                             elif chat['object_guid'] == g_usvl and chat['last_message']['author_object_guid'] != 'u0DHSrv0bd39028f37e44305e207e38a' and chat['abs_object']['type'] == 'Group':
                                 tawd42 = Thread(target=usvl_save_data, args=(text, chat, bot,))
                                 tawd42.start()
-                            elif test_usvl == chat['object_guid'] and chat['last_message']['author_object_guid'] != 'u0DHSrv0bd39028f37e44305e207e38a' and chat['abs_object']['type'] == 'Group':
-                                print('usvl tested')
-                                tawd43 = Thread(target=usvl_test_data, args=(text, chat, bot,))
-                                tawd43.start()
-                            list_message_seened.append(m_id)
+                            elif text.startswith('مناسبت'):
+                                tawd53 = Thread(target=get_mona, args=(text, chat, bot,))
+                                tawd53.start()
                     elif 'SendMessages' in access and chat['last_message']['type'] == 'Other' and text.strip() != '' and chat['abs_object']['type'] == 'Group' and chat['abs_object']['type'] == 'Group':
                         text = text.strip()
                         m_id = chat['object_guid'] + chat['last_message']['message_id']
