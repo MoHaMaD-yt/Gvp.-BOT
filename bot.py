@@ -411,6 +411,15 @@ def get_gold(text,chat,bot):
         print('code bz server err')
         return False
 
+def get_time(text,chat,bot):
+    try:                        
+        jd = requests.get('http://api.codebazan.ir/time-date/?td=all').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
+
 def get_wiki(text,chat,bot):
     try:
         t = text[7:-1]
@@ -837,6 +846,9 @@ while(2 > 1):
                             elif text.startswith('حدیث'):
                                 tawd22 = Thread(target=get_gold, args=(text, chat, bot,))
                                 tawd22.start()
+			    elif text.startswith('زمان'):
+                                tawd48 = Thread(target=get_gold, args=(text, chat, bot,))
+                                tawd48.start()	
                             elif text.startswith('!ping ['):
                                 tawd21 = Thread(target=get_ping, args=(text, chat, bot,))
                                 tawd21.start()
