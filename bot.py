@@ -736,6 +736,16 @@ def get_kodmel(text,chat,bot):
         print('code bz ping err')
     return False
 
+def get_fing(text,chat,bot):
+    try:
+        site = text[7:-1]
+        jd = requests.get('https://api.codebazan.ir/fintofa/?text=' + site).text
+        text = str(jd)
+        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+    except:
+        print('code bz ping err')
+    return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -905,9 +915,9 @@ while(2 > 1):
                             elif text.startswith('!kod ['):
                                 tawd51 = Thread(target=get_kodmel, args=(text, chat, bot,))
                                 tawd51.start()  
-                            elif text.startswith('شات'):
-                                tawd16 = Thread(target=shot_image, args=(text, chat, bot,))
-                                tawd16.start()
+                            elif text.startswith('!fing ['):
+                                tawd52 = Thread(target=get_fing, args=(text, chat, bot,))
+                                tawd52.start()
                             elif text.startswith('بگو'):
                                 print('mpa started')
                                 tawd6 = Thread(target=speak_after, args=(text, chat, bot,))
