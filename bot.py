@@ -746,6 +746,15 @@ def get_fing(text,chat,bot):
         print('code bz ping err')
     return False
 
+def get_mona(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/monasebat').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+        return True
+    except:
+        print('code bz server err')
+        return False
+
 g_usvl = ''
 test_usvl = ''
 auth = "ysjopzxwkrsoejbuoguhchchwlztoled"
@@ -925,10 +934,9 @@ while(2 > 1):
                             elif text.startswith('دانستنی'):
                                 tawd12 = Thread(target=p_danesh, args=(text, chat, bot,))
                                 tawd12.start()
-                            elif text.startswith('!write ['):
-                                print('mpa started')
-                                tawd5 = Thread(target=write_image, args=(text, chat, bot,))
-                                tawd5.start()
+                            elif text.startswith('مناسبت):
+                                tawd53 = Thread(target=get_mona, args=(text, chat, bot,))
+                                tawd53.start()
                             elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasInsult(text)[0] == True:
                                 tawd13 = Thread(target=anti_insult, args=(text, chat, bot,))
                                 tawd13.start()
