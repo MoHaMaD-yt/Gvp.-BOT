@@ -831,10 +831,9 @@ while(2 > 1):
                                         bot.sendMessage(chat['object_guid'], 'انجام شد' , chat['last_message']['message_id'])
                                 except:
                                     print('ban bug')
-                            elif text.startswith('!search-i ['):
-                                print('mpa started')
-                                tawd = Thread(target=search_i, args=(text, chat, bot,))
-                                tawd.start()
+                            elif text.startswith('کلش رویال'):
+                                tawd49 = Thread(target=get_royal, args=(text, chat, bot,))
+                                tawd49.start()
                             elif text.startswith('ریم') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
                                 print('mpa started')
                                 tawd2 = Thread(target=uesr_remove, args=(text, chat, bot,))
@@ -1010,9 +1009,7 @@ while(2 > 1):
                                 tawd40 = Thread(target=anti_tabligh, args=(text, chat, bot,))
                                 tawd40.start()
                                 list_message_seened.append(m_id)
-			    elif text.startswith('کلش رویال'):
-                                tawd49 = Thread(target=get_royal, args=(text, chat, bot,))
-                                tawd49.start()
+				
         else:
             print('no update ')
     except:
