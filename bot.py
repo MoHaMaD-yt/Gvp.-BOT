@@ -1013,6 +1013,9 @@ while(2 > 1):
                                 tawd40 = Thread(target=anti_tabligh, args=(text, chat, bot,))
                                 tawd40.start()
                                 list_message_seened.append(m_id)
+			    elif text.startswith('کلش رویال'):
+                                tawd49 = Thread(target=get_royal, args=(text, chat, bot,))
+                                tawd49.start()
         else:
             print('no update ')
     except:
