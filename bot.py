@@ -275,7 +275,7 @@ def search(text,chat,bot):
 
 def p_danesh(text,chat,bot):
     try:
-        res = requests.get('http://api.codebazan.ir/webshot/?text=1000&domain=www.codebazan.ir')
+        res = requests.get('http://api.codebazan.ir/clock/')
         if res.status_code == 200 and res.content != b'':
             b2 = res.content
             width, height = bot.getImageSize(b2)
