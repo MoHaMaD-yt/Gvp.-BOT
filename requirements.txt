@@ -6,6 +6,3 @@ arabic-reshaper
 python-bidi
 mutagen
 gtts
-rubika
-tqdm
-urllib3
