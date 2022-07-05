@@ -834,10 +834,11 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auth = "jcrtupgbfptebqgmrijtwbtzcjuthepf"
+auths = open('multi_acconting.txt','r').read().split('\n')
+auth = auths[0]
 bot = Bot(auth)
 list_message_seened = []
-time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
+time_reset = math.floor(datetime.datetime.today().timestamp()) + 350
 while(2 > 1):
     try:
         chats_list:list = bot.get_updates_all_chats()
