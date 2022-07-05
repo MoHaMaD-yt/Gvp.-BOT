@@ -834,8 +834,8 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auths = "jcrtupgbfptebqgmrijtwbtzcjuthepf"
-auth = "jcrtupgbfptebqgmrijtwbtzcjuthepf"
+auths = 'jcrtupgbfptebqgmrijtwbtzcjuthepf'
+auth = auths[0]
 bot = Bot(auth)
 list_message_seened = []
 time_reset = math.floor(datetime.datetime.today().timestamp()) + 350
