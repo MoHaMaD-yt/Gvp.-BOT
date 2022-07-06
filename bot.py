@@ -834,7 +834,7 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auths = 'jcrtupgbfptebqgmrijtwbtzcjuthepf'
+auths = open('multi_acconting.txt','r').read().split('\n')
 auth = auths[0]
 bot = Bot(auth)
 list_message_seened = []
@@ -861,10 +861,10 @@ while(2 > 1):
                                     is_joined = bot.checkJoinChannel(chat['object_guid'], open('your_channel.txt','r').read())
                                     if is_joined == 'no exist':
                                         accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@Selvesmamad\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
+                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
                                     elif is_joined == 'need for username' or is_joined == 'Profile not success':
                                         accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا نام کاربری خود را تنظیم کنید یا نام و نام خانوادگی را به متنی مفهوم تغییر دهید\nسپس در صورت عضو نبودن عضو کانال زیر شوید \n@Selvesmamad\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
+                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا نام کاربری خود را تنظیم کنید یا نام و نام خانوادگی را به متنی مفهوم تغییر دهید\nسپس در صورت عضو نبودن عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
                                     elif is_joined == 'is exist':
                                         fp = open('verfied_users.txt','a')
                                         fp.write('\n' + chat['object_guid'])
@@ -879,7 +879,7 @@ while(2 > 1):
                                 if text == '!start':
                                     print('message geted and sinned')
                                     try:
-                                        bot.sendMessage(chat['object_guid'], 'سلام \n به ابر سرویس پفک خوش آمدید ❤\n\n لطفا جهت راهنما \n!help \nرا ارسال کنید',chat['last_message']['message_id'])
+                                        bot.sendMessage(chat['object_guid'], 'سلام \n به ابر سرویس کروز خوش آمدید ❤\n\n لطفا جهت راهنما \n!help \nرا ارسال کنید',chat['last_message']['message_id'])
                                         print('sended response')    
                                     except:
                                         print('server bug1')
@@ -1142,7 +1142,7 @@ while(2 > 1):
                                             fp = open('black_list.txt','a')
                                             fp.write('\n' + guid)
                                             fp.close()
-                                            bot.sendMessage(guid, 'متاسفانه شما فعلا به لیست سیاه پفک اضافه شدید')
+                                            bot.sendMessage(guid, 'متاسفانه شما فعلا به لیست سیاه کروز اضافه شدید')
                                     except:
                                         print('black list err')
                                 elif text.startswith('!unblack [') and chat['object_guid'] in qrozAdmins:
@@ -1153,14 +1153,14 @@ while(2 > 1):
                                             bl = open('black_list.txt','w')
                                             bl.write(black_users.replace('\n' + guid, ''))
                                             bl.close()
-                                            bot.sendMessage(guid, 'خوشبختانه از لیست سیاه پفک بیرون آمدید')
+                                            bot.sendMessage(guid, 'خوشبختانه از لیست سیاه کروز بیرون آمدید')
                                     except:
                                         print('black list err')
                                 elif chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and text.startswith('!black') and not chat['object_guid'] in black_users:
                                     fp = open('black_list.txt','a')
                                     fp.write('\n'+ chat['object_guid'])
                                     fp.close()
-                                    bot.sendMessage(chat['object_guid'], 'گروه به لیست سیاه پفک اضافه گردید ):')
+                                    bot.sendMessage(chat['object_guid'], 'گروه به لیست سیاه کروز اضافه گردید ):')
                                 elif chat['object_guid'] == g_usvl and chat['last_message']['author_object_guid'] != open('me_guid.txt','r').read() and chat['abs_object']['type'] == 'Group' and not text.startswith('!'):
                                     tawd42 = Thread(target=usvl_save_data, args=(text, chat, bot, auths,))
                                     tawd42.start()
@@ -1173,7 +1173,7 @@ while(2 > 1):
                                 bl = open('black_list.txt','w')
                                 bl.write(black_users.replace('\n' + chat['object_guid'], ''))
                                 bl.close()
-                                bot.sendMessage(chat['object_guid'], 'گروه از لیست سیاه پفک در آمد (:')
+                                bot.sendMessage(chat['object_guid'], 'گروه از لیست سیاه کروز در آمد (:')
                             list_message_seened.append(m_id)
                     elif 'SendMessages' in access and chat['last_message']['type'] == 'Other' and text.strip() != '' and chat['abs_object']['type'] == 'Group' and chat['abs_object']['type'] == 'Group':
                         text = text.strip()
