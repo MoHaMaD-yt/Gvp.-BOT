@@ -834,11 +834,10 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auths = open('multi_acconting.txt','r').read().split('\n')
-auth = auths[0]
+auth = "tjsxqinipkzoaujzslkxcekbaagpjqge"
 bot = Bot(auth)
 list_message_seened = []
-time_reset = math.floor(datetime.datetime.today().timestamp()) + 350
+time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
 while(2 > 1):
     try:
         chats_list:list = bot.get_updates_all_chats()
@@ -861,7 +860,7 @@ while(2 > 1):
                                     is_joined = bot.checkJoinChannel(chat['object_guid'], open('your_channel.txt','r').read())
                                     if is_joined == 'no exist':
                                         accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
+                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@over_games\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
                                     elif is_joined == 'need for username' or is_joined == 'Profile not success':
                                         accept = False
                                         bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا نام کاربری خود را تنظیم کنید یا نام و نام خانوادگی را به متنی مفهوم تغییر دهید\nسپس در صورت عضو نبودن عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
