@@ -791,7 +791,7 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auth = "oyhipturgvicvpapyzjzjqpsft"
+auth = "wdoinfyjekkkblschgizqiyzfqbsvzsq"
 bot = Bot(auth)
 list_message_seened = []
 time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
