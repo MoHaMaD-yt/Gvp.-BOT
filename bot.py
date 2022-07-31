@@ -791,7 +791,7 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auth = "wdoinfyjekkkblschgizqiyzfqbsvzsq"
+auth = "oyhipturgvicvpapyzjzjqpsft"
 bot = Bot(auth)
 list_message_seened = []
 time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
@@ -808,37 +808,14 @@ while(2 > 1):
                         text = text.strip()
                         m_id = chat['object_guid'] + chat['last_message']['message_id']
                         if not m_id in list_message_seened:
-                            verfied_users = open('verfied_users.txt','r').read().split('\n')
-                            black_users = open('black_list.txt','r').read().split('\n')
                             print('new message')
-                            accept = True
-                            if chat['abs_object']['type'] == 'User' and not chat['object_guid'] in qrozAdmins and open('your_channel.txt','r').read() != '' and not chat['object_guid'] in black_users:
-                                if not chat['object_guid'] in verfied_users:
-                                    is_joined = bot.checkJoinChannel(chat['object_guid'], open('your_channel.txt','r').read())
-                                    if is_joined == 'no exist':
-                                        accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
-                                    elif is_joined == 'need for username' or is_joined == 'Profile not success':
-                                        accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا نام کاربری خود را تنظیم کنید یا نام و نام خانوادگی را به متنی مفهوم تغییر دهید\nسپس در صورت عضو نبودن عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
-                                    elif is_joined == 'is exist':
-                                        fp = open('verfied_users.txt','a')
-                                        fp.write('\n' + chat['object_guid'])
-                                        fp.close()
-                                        if text.startswith('!') == False:
-                                            bot.sendMessage(chat['object_guid'], 'برای استفاده از ربات دستور زیر را بفرستید\n!start\n❤')
-                                        accept = True
-
-                            elif chat['object_guid'] in black_users:
-                                accept = False
-                            if accept == True:        
-                                if text == '!start':
-                                    print('message geted and sinned')
-                                    try:
-                                        bot.sendMessage(chat['object_guid'], 'سلام \n به ابر سرویس کروز خوش آمدید ❤\n\n لطفا جهت راهنما \n!help \nرا ارسال کنید',chat['last_message']['message_id'])
-                                        print('sended response')    
-                                    except:
-                                        print('server bug1')
+                            if text == '!start' or text == '/start' or text == 'شروع' or text == 'استارت':
+                                print('message geted and sinned')
+                                try:
+                                    bot.sendMessage(chat['object_guid'], 'سلام دوست عزیز. \n به استریک بات خوش اومدی🚭🧡 \n برای دریافت لیست دستورا‌ت کلمه زیر را بفرستید تابرای شما ارسال گردد \n /help \n کانال ما جوین اجباری @mamadcoder ',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
                             if text == 'جوک' or text == 'دستورات' or text == 'بیو' or text == 'خاطره' or text == 'په نه په' or text == 'پ ن پ' or text == 'قوانین' or text == 'دانستنی' or text == 'دانش' or text == 'الکی' or text == 'الکی مثلا' or text == 'ذکر' or text == 'دیالوگ' or text == 'خبر' or text == 'اخبار' or text == 'حدیث' or text == 'سرچ' or text == 'سرگرمی' or text == 'کاربردی' or text == 'شات' or text == 'بگو' or text == 'سرچ عکس':
                                 print('message geted and sinned')
                                 try:
