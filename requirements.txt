@@ -6,3 +6,5 @@ arabic-reshaper
 python-bidi
 mutagen
 gtts
+rubika
+rubika-lib

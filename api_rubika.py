@@ -155,9 +155,7 @@ class Bot:
 			}))},url="https://messengerg2c66.iranlms.ir/")
 			try:
 				k = loads(self.enc.decrypt(o.json()["data_enc"]))
-				if k['status_det'] == 'TOO_REQUESTS':
-					return 'many_request'
-				elif k['status'] != 'OK' or k['status_det'] != 'OK':
+				if k['status'] != 'OK' or k['status_det'] != 'OK':
 					o = '502'
 			except:
 				o = '502'
@@ -186,7 +184,7 @@ class Bot:
 		else:
 			t = len(bytef) / 131072
 			t += 1
-			t = math.floor(t)
+			t = random._floor(t)
 			for i in range(1,t+1):
 				if i != t:
 					k = i - 1
@@ -266,38 +264,30 @@ class Bot:
 							t = False
 					return p
 				else:
-					t = False
-					while t == False:
-						try:
-							p = loads(self.enc.decrypt(loads(post(json={"api_version":"5","auth":self.auth,"data_enc":self.enc.encrypt(dumps({
-								"method":"sendMessage",
-								"input":{
-									"object_guid":chat_id,
-									"rnd":f"{randint(100000,900000)}",
-									"reply_to_message_id":message_id,
-									"file_inline":{
-										"dc_id":str(dc_id),
-										"file_id":str(file_id),
-										"type":"File",
-										"file_name":file_name,
-										"size":size,
-										"mime":mime,
-										"access_hash_rec":access_hash_rec
-									}
-								},
-								"client":{
-									"app_name":"Main",
-									"app_version":"3.2.1",
-									"platform":"Web",
-									"package":"web.rubika.ir",
-									"lang_code":"fa"
-								}
-							}))},url="https://messengerg2c17.iranlms.ir/").text)['data_enc']))
-							t = True
-						except:
-							t = False
-					return p
-
+					return loads(self.enc.decrypt(loads(post(json={"api_version":"5","auth":self.auth,"data_enc":self.enc.encrypt(dumps({
+						"method":"sendMessage",
+						"input":{
+							"object_guid":chat_id,
+							"rnd":f"{randint(100000,900000)}",
+							"reply_to_message_id":message_id,
+							"file_inline":{
+								"dc_id":str(dc_id),
+								"file_id":str(file_id),
+								"type":"File",
+								"file_name":file_name,
+								"size":size,
+								"mime":mime,
+								"access_hash_rec":access_hash_rec
+							}
+						},
+						"client":{
+							"app_name":"Main",
+							"app_version":"3.2.1",
+							"platform":"Web",
+							"package":"web.rubika.ir",
+							"lang_code":"fa"
+						}
+					}))},url="https://messengerg2c17.iranlms.ir/").text)['data_enc']))    
 			else:
 				if message_id == None:
 					return loads(self.enc.decrypt(loads(post(json={"api_version":"5","auth":self.auth,"data_enc":self.enc.encrypt(dumps({
@@ -590,27 +580,20 @@ class Bot:
 					}))},url="https://messengerg2c17.iranlms.ir/").text)['data_enc'])) 
 
 	def getUserInfo(self, chat_id):
-		user_info = False
-		while user_info == False:
-			try:
-				p = loads(self.enc.decrypt(post(json={"api_version":"5","auth":self.auth,"data_enc":self.enc.encrypt(dumps({
-					"method":"getUserInfo",
-					"input":{
-						"user_guid":chat_id
-					},
-					"client":{
-						"app_name":"Main",
-						"app_version":"3.2.1",
-						"platform":"Web",
-						"package":"web.rubika.ir",
-						"lang_code":"fa"
-					}
-				}))},url="https://messengerg2c37.iranlms.ir/").json()["data_enc"]))
-				user_info = True
-			except:
-				continue
-		return p
-
+		return loads(self.enc.decrypt(post(json={"api_version":"5","auth":self.auth,"data_enc":self.enc.encrypt(dumps({
+			"method":"getUserInfo",
+			"input":{
+				"user_guid":chat_id
+			},
+			"client":{
+				"app_name":"Main",
+				"app_version":"3.2.1",
+				"platform":"Web",
+				"package":"web.rubika.ir",
+				"lang_code":"fa"
+			}
+		}))},url="https://messengerg2c37.iranlms.ir/").json()["data_enc"]))
+	
 	def getMessages(self, chat_id,min_id):
 		return loads(self.enc.decrypt(post(json={"api_version":"5","auth": self.auth,"data_enc":self.enc.encrypt(dumps({
 			"method":"getMessagesInterval",
@@ -756,7 +739,7 @@ class Bot:
 		t = False
 		while t == False:
 			try:
-				time_stamp = str(math.floor(datetime.datetime.today().timestamp()) - 200)
+				time_stamp = str(random._floor(datetime.datetime.today().timestamp()) - 200)
 				p = post(json={"api_version":"5","auth": self.auth,"data_enc":self.enc.encrypt(dumps({
 					"method":"getChatsUpdates",
 					"input":{
@@ -777,7 +760,7 @@ class Bot:
 		return p
 
 	def get_updates_chat(self, chat_id):
-		time_stamp = str(math.floor(datetime.datetime.today().timestamp()) - 200)
+		time_stamp = str(random._floor(datetime.datetime.today().timestamp()) - 200)
 		return loads(self.enc.decrypt(post(json={"api_version":"5","auth": self.auth,"data_enc":self.enc.encrypt(dumps({
 			"method":"getMessagesUpdates",
 			"input":{
@@ -794,7 +777,7 @@ class Bot:
 		}))},url="https://messengerg2c67.iranlms.ir/").json().get("data_enc"))).get("data").get("updated_messages")
 	
 	def my_sticker_set(self):
-		time_stamp = str(math.floor(datetime.datetime.today().timestamp()) - 200)
+		time_stamp = str(random._floor(datetime.datetime.today().timestamp()) - 200)
 		return loads(self.enc.decrypt(post(json={"api_version":"5","auth": self.auth,"data_enc":self.enc.encrypt(dumps({
 			"method":"getMyStickerSets",
 			"input":{},
@@ -831,66 +814,6 @@ class Bot:
 		value = value.lstrip('#')
 		lv = len(value)
 		return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
-
-	def searchInChannelMembers(self, text, channel_guid):
-		try:
-			p = loads(self.enc.decrypt(post(json={
-				"api_version":"4",
-				"auth":self.auth,
-				"client":{
-					"app_name":"Main",
-					"app_version":"2.8.1",
-					"platform":"Android",
-					"package":"ir.resaneh1.iptv",
-					"lang_code":"fa"
-				},
-				"data_enc":self.enc.encrypt(dumps({
-					"channel_guid": channel_guid,
-					"search_text": text
-				})),
-				"method":"getChannelAllMembers"
-			},url="https://messengerg2c67.iranlms.ir/").json()["data_enc"]))
-			if p['in_chat_members'] != []:
-				return p['in_chat_members']
-			else:
-				return 'no exist'
-
-		except: 
-			return 'error'
-
-	def checkJoinChannel(self,member_guid,channel_guid):
-		user_data:dict = self.getUserInfo(member_guid)['data']['user']
-		del user_data['is_deleted'], user_data['is_verified'], user_data['online_time']
-		search_mem = ''
-		if 'username' in user_data.keys() and user_data['username'] != '':
-			search_mem = user_data['username']
-		elif 'last_name' in user_data.keys():
-			search_mem = user_data['first_name'] + ' ' + user_data['last_name']
-		elif not 'last_name' in user_data.keys() and 'first_name' in user_data.keys():
-			search_mem = user_data['first_name']
-		else:
-			return 'Profile not success'
-		
-		ppo = False
-		while ppo == False:
-			response = self.searchInChannelMembers(search_mem, channel_guid)
-			if response == 'error':
-				continue
-			elif response == 'no exist':
-				ppo =True
-				if not 'username' in user_data.keys():
-					return 'need for username'
-				else:
-					return 'no exist'
-			else:
-				ppo = True
-				ss = [i['member_guid'] for i in response]
-				if member_guid in ss:
-					return 'is exist'
-				elif not member_guid in ss and not 'username' in user_data.keys():
-					return 'need for username'
-				else:
-					return 'no exist'
 
 	def write_text_image(self,text:str,bc_color:str='yellow',size:int=40,color='#3d3d3d',x=50,y=100):
 		try:
