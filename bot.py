@@ -14,6 +14,7 @@ from json import dumps, loads
 from random import randint
 import re
 from re import findall
+from rubika_lib import _date_time
 import requests
 import urllib3
 from Crypto.Cipher import AES
@@ -23,7 +24,6 @@ from googletrans import Translator
 import io
 from PIL import Image , ImageFont, ImageDraw 
 import arabic_reshaper
-from bidi.algorithm import get_display
 from mutagen.mp3 import MP3
 from gtts import gTTS
 from threading import Thread
@@ -38,12 +38,11 @@ def similar(a, b):
 
 def hasInsult(msg):
 	swData = [False,None]
-	if msg != None:
-		for i in open("dontReadMe.txt").read().split("\n"):
-			if i in msg:
-				swData = [True, i]
-				break
-			else: continue
+	for i in open("dontReadMe.txt").read().split("\n"):
+		if i in msg:
+			swData = [True, i]
+			break
+		else: continue
 	return swData
 
 def hasAds(msg):
@@ -79,35 +78,23 @@ def search_i(text,chat,bot):
                                 b2 = res.content
                                 width, height = bot.getImageSize(b2)
                                 tx = bot.requestFile(j['title'] + '.png', len(b2), 'png')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, j['title'] + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, j['title'] + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
+                                print('sended file')
                             elif thumb == 'webp':
                                 b2 = res.content
                                 width, height = bot.getImageSize(b2)
                                 tx = bot.requestFile(j['title'] + '.webp', len(b2), 'webp')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'webp', tx['dc_id'] , access, j['title'] + '.webp', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'webp', tx['dc_id'] , access, j['title'] + '.webp', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
+                                print('sended file')
                             else:
                                 b2 = res.content
                                 width, height = bot.getImageSize(b2)
                                 tx = bot.requestFile(j['title'] + '.jpg', len(b2), 'jpg')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'jpg', tx['dc_id'] , access, j['title'] + '.jpg', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                bot.sendImage(chat['last_message']['author_object_guid'] ,tx['id'] , 'jpg', tx['dc_id'] , access, j['title'] + '.jpg', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'])
+                                print('sended file')
                         a += 1
                     except:
                         print('image error')
@@ -131,35 +118,23 @@ def search_i(text,chat,bot):
                                 b2 = res.content
                                 width, height = bot.getImageSize(b2)
                                 tx = bot.requestFile(j['title'] + '.png', len(b2), 'png')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, j['title'] + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, j['title'] + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
+                                print('sended file')
                             elif thumb == 'webp':
                                 b2 = res.content
                                 width, height = bot.getImageSize(b2)
                                 tx = bot.requestFile(j['title'] + '.webp', len(b2), 'webp')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    bot.sendImage(chat['object_guid'] ,tx['id'] , 'webp', tx['dc_id'] , access, j['title'] + '.webp', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                bot.sendImage(chat['object_guid'] ,tx['id'] , 'webp', tx['dc_id'] , access, j['title'] + '.webp', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
+                                print('sended file')
                             else:
                                 b2 = res.content
                                 tx = bot.requestFile(j['title'] + '.jpg', len(b2), 'jpg')
-                                if tx != 'many_request':
-                                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                    width, height = bot.getImageSize(b2)
-                                    bot.sendImage(chat['object_guid'] ,tx['id'] , 'jpg', tx['dc_id'] , access, j['title'] + '.jpg', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
-                                    print('sended file')
-                                else:
-                                    print('many request err')
-                                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                                width, height = bot.getImageSize(b2)
+                                bot.sendImage(chat['object_guid'] ,tx['id'] , 'jpg', tx['dc_id'] , access, j['title'] + '.jpg', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, j['title'], chat['last_message']['message_id'])
+                                print('sended file')
                         a += 1  
                     except:
                         print('image erorr')
@@ -182,14 +157,10 @@ def write_image(text,chat,bot):
                 if len(paramiters) == 5:
                     b2 = bot.write_text_image(txt_xt,paramiters[0],int(paramiters[1]),str(paramiters[2]),int(paramiters[3]),int(paramiters[4]))
                     tx = bot.requestFile('code_image.png', len(b2), 'png')
-                    if tx != 'many_request':
-                        access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                        width, height = bot.getImageSize(b2)
-                        bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'code_image.png', len(b2) , str(bot.getThumbInline(b2))[2:-1] , width, height ,message_id= c_id)
-                        print('sended file') 
-                    else:
-                        print('many request err')
-                        bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                    width, height = bot.getImageSize(b2)
+                    bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'code_image.png', len(b2) , str(bot.getThumbInline(b2))[2:-1] , width, height ,message_id= c_id)
+                    print('sended file') 
                     return True
         return False	              
     except:
@@ -228,18 +199,14 @@ def speak_after(text,chat,bot):
                 speech.write_to_fp(changed_voice)
                 b2 = changed_voice.getvalue()
                 tx = bot.requestFile('sound.ogg', len(b2), 'sound.ogg')
-                if tx != 'many_request':
-                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                    f = io.BytesIO()
-                    f.write(b2)
-                    f.seek(0)
-                    audio = MP3(f)
-                    dur = audio.info.length
-                    bot.sendVoice(chat['object_guid'],tx['id'] , 'ogg', tx['dc_id'] , access, 'sound.ogg', len(b2), dur * 1000 ,message_id= c_id)
-                    print('sended voice')
-                else:
-                    print('many request err')
-                    bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                f = io.BytesIO()
+                f.write(b2)
+                f.seek(0)
+                audio = MP3(f)
+                dur = audio.info.length
+                bot.sendVoice(chat['object_guid'],tx['id'] , 'ogg', tx['dc_id'] , access, 'sound.ogg', len(b2), dur * 1000 ,message_id= c_id)
+                print('sended voice')
                 return True
         return False
     except:
@@ -304,13 +271,9 @@ def p_danesh(text,chat,bot):
             b2 = res.content
             width, height = bot.getImageSize(b2)
             tx = bot.requestFile('jok_'+ str(random.randint(1000000, 9999999)) + '.png', len(b2), 'png')
-            if tx != 'many_request':
-                access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'jok_'+ str(random.randint(1000000, 9999999)) + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, message_id=chat['last_message']['message_id'])
-                print('sended file')                       
-            else:
-                print('many request err')
-                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+            bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'jok_'+ str(random.randint(1000000, 9999999)) + '.png', len(b2), str(bot.getThumbInline(b2))[2:-1] , width, height, message_id=chat['last_message']['message_id'])
+            print('sended file')                       
         return True
     except:
         print('code bz danesh api bug')
@@ -363,14 +326,10 @@ def shot_image(text,chat,bot):
                 if res.status_code == 200 and res.content != b'':
                     b2 = res.content
                     tx = bot.requestFile('code_image.png', len(b2), 'png')
-                    if tx != 'many_request':
-                        access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                        width, height = bot.getImageSize(b2)
-                        bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'code_image.png', len(b2) , str(bot.getThumbInline(b2))[2:-1] , width, height ,message_id= c_id)
-                        print('sended file')    
-                    else:
-                        print('many request err')
-                        bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
+                    access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                    width, height = bot.getImageSize(b2)
+                    bot.sendImage(chat['object_guid'] ,tx['id'] , 'png', tx['dc_id'] , access, 'code_image.png', len(b2) , str(bot.getThumbInline(b2))[2:-1] , width, height ,message_id= c_id)
+                    print('sended file')    
     except:
         print('code bz shot err')
     return True
@@ -418,7 +377,7 @@ def get_font(text,chat,bot):
         if hasInsult(name_user)[0] == False and chat['abs_object']['type'] == 'Group':
             bot.sendMessage(chat['object_guid'], 'نتایج کامل به پیوی شما ارسال شد', chat['last_message']['message_id'])
             bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + name_user + ') : \n\n'+text)                                        
-        elif hasInsult(name_user)[0] == False and chat['abs_object']['type'] == 'User':
+        elif chat['abs_object']['type'] == 'User':
             bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
     except:
         print('code bz font err')
@@ -537,6 +496,14 @@ def get_bio(text,chat,bot):
         print('code bz bio err')
     return True
 
+def get_khabar(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/khabar/?kind=iran').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz khabar err')
+    return True
+
 def get_trans(text,chat,bot):
     try:
         t = text[8:-1]
@@ -578,6 +545,14 @@ def get_danesh(text,chat,bot):
         print('code bz danesh err')
     return True
 
+def get_sebt(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/monasebat/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz sebt err')
+    return True
+
 def get_alaki_masala(text,chat,bot):
     try:                        
         jd = requests.get('https://api.codebazan.ir/jok/alaki-masalan/').text
@@ -586,12 +561,44 @@ def get_alaki_masala(text,chat,bot):
         print('code bz alaki masala err')
     return True
 
+def get_hadis(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/hadis/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz hadis err')
+    return True
+
+def get_dialog(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/dialog/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz dialog err')
+    return True
+
+def get_zekr(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/zekr/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz zekr err')
+    return True
+
 def name_shakh(text,chat,bot):
     try:                        
         jd = requests.get('https://api.codebazan.ir/name/').text
         bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
     except:
         print('code bz name err')
+
+def get_qzal(text,chat,bot):
+    try:                        
+        jd = requests.get('https://api.codebazan.ir/ghazalsaadi/').text
+        bot.sendMessage(chat['object_guid'], jd, chat['last_message']['message_id'])
+    except:
+        print('code bz qazal err')
+    return True
 
 def get_vaj(text,chat,bot):
     try:
@@ -615,14 +622,17 @@ def get_font_fa(text,chat,bot):
         if hasInsult(site)[0] == False and chat['abs_object']['type'] == 'Group':
             bot.sendMessage(chat['object_guid'], 'نتایج کامل به پیوی شما ارسال شد', chat['last_message']['message_id'])
             bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + site + ') : \n\n'+text)                                        
-        elif hasInsult(name_user)[0] == False and chat['abs_object']['type'] == 'User':
+        elif chat['abs_object']['type'] == 'User':
             bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
     except:
         print('code bz font fa err')
 
 def get_leaved(text,chat,bot):
     try:
-        send_text = 'بای بای 🖖'
+        group = chat['abs_object']['title']
+        date = _date_time.historyIran()
+        time = _date_time.hourIran()
+        send_text = 'یک کاربر در تاریخ:\n' + date + '\n' + time + '\n از گروه ' + group + 'لفت داد \n @mamadcoder'
         bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
     except:
         print('rub server err')
@@ -630,15 +640,9 @@ def get_leaved(text,chat,bot):
 def get_added(text,chat,bot):    
     try:
         group = chat['abs_object']['title']
-        send_text = 'سلام دوست عزیز به ' + group + ' خوش آمدی ❤ \n لطفا قوانین رو رعایت کن ✅'
-        bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
-    except:
-        print('rub server err')
-
-def get_qroz_me(text,chat,bot):
-    try:
-        
-        send_text = open('qroz-aks.txt','r').read()
+        date = _date_time.historyIran()
+        time = _date_time.hourIran()
+        send_text = 'یک کاربر در تاریخ:\n' + date + '\n' + time + '\n به گروه ' + group + ' پیوست \n @mamadcoder '
         bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
     except:
         print('rub server err')
@@ -652,55 +656,74 @@ def get_help(text,chat,bot):
         bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
     print('help guid sended')
 
-def get_lang_help(text,chat,bot):                                
-    text = open('lang_help.txt','r').read()
-    bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
-    print('help guid sended')
+def get_sar(text,chat,bot):                                
+    text = open('sar.txt','r').read()
+    if chat['abs_object']['type'] == 'Group':
+        bot.sendMessage(chat['object_guid'], 'نتایج کامل به پیوی شما ارسال شد', chat['last_message']['message_id'])
+        bot.sendMessage(chat['last_message']['author_object_guid'], text)                                        
+    elif chat['abs_object']['type'] == 'User':
+        bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
+    print('sar guid sended')
 
-def usvl_save_data(text,chat,bot,auths:list):
+def get_kar(text,chat,bot):                                
+    text = open('kar.txt','r').read()
+    if chat['abs_object']['type'] == 'Group':
+        bot.sendMessage(chat['object_guid'], 'نتایج کامل به پیوی شما ارسال شد', chat['last_message']['message_id'])
+        bot.sendMessage(chat['last_message']['author_object_guid'], text)                                        
+    elif chat['abs_object']['type'] == 'User':
+        bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
+    print('kar guid sended')
+
+def get_gav(text,chat,bot):
     try:
-        c_id = chat['last_message']['message_id']
-        msg_data = bot.getMessagesInfo(chat['object_guid'], [c_id])
-        msg_data = msg_data[0]
-        if 'reply_to_message_id' in msg_data.keys():
-            msg_data = bot.getMessagesInfo(chat['object_guid'], [msg_data['reply_to_message_id']])[0]
-            if 'text' in msg_data.keys() and msg_data['text'].strip() != '':
-                txt_xt = msg_data['text']
-                ll = hasInsult(text)
-                if ll[0] != True:
+        
+        send_text = open('gav.txt','r').read()
+        bot.sendMessage(chat['object_guid'],  send_text, chat['last_message']['message_id'])
+    except:
+        print('rub server err')
+
+def get_srch(text,chat,bot):                                
+    text = open('srch.txt','r').read()
+    if chat['abs_object']['type'] == 'Group':
+        bot.sendMessage(chat['object_guid'], 'نتایج کامل به پیوی شما ارسال شد', chat['last_message']['message_id'])
+        bot.sendMessage(chat['last_message']['author_object_guid'], text)                                        
+    elif chat['abs_object']['type'] == 'User':
+        bot.sendMessage(chat['object_guid'], text, chat['last_message']['message_id'])
+    print('srch guid sended')
+
+def usvl_save_data(text,chat,bot):
+    jj = False
+    while jj == False:
+        try:
+            c_id = chat['last_message']['message_id']
+            msg_data = bot.getMessagesInfo(chat['object_guid'], [c_id])
+            msg_data = msg_data[0]
+            if 'reply_to_message_id' in msg_data.keys():
+                msg_data = bot.getMessagesInfo(chat['object_guid'], [msg_data['reply_to_message_id']])[0]
+                if 'text' in msg_data.keys() and msg_data['text'].strip() != '':
+                    txt_xt = msg_data['text']
                     f3 = len(open('farsi-dic.json','rb').read())
                     if f3 < 83886080:
                         f2 = json.loads(open('farsi-dic.json','r').read())
                         if not txt_xt in f2.keys():
-                            f2[txt_xt] = [text.replace('"', "'")]
+                            f2[txt_xt] = [text]
                         else:
                             if not text in f2[txt_xt]:
-                                f2[txt_xt].append(text.replace('"', "'"))
+                                f2[txt_xt].append(text)
                         c1 = open('farsi-dic.json','w')
                         c1.write(json.dumps(f2))
-                        c1.close()
+                        c1.close
                     else:
                         bot.sendMessage(chat['object_guid'], '!usvl_stop') 
                         b2 = open('farsi-dic.json','rb').read()
                         tx = bot.requestFile('farsi-dic.json', len(b2), 'json')
-                        if tx != 'many_request':
-                            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                            bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=c_id)
-                        else:    
-                            print('many request')
-                            bot2 = Bot(auths[1])
-                            tx = bot2.requestFile('farsi-dic.json', len(b2), 'json')
-                            if tx != 'many_request':
-                                access = bot2.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                                bot2.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
-                            else:
-                                print('many request err')
-                                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
-                jj = True
-                return True
-        jj = True
-    except:
-        print('usvl save data is err')
+                        access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+                        bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=c_id)
+                    jj = True
+                    return True
+            jj = True
+        except:
+            print('server rubika err')
 
 def usvl_test_data(text,chat,bot):
     t = False
@@ -720,84 +743,18 @@ def usvl_test_data(text,chat,bot):
                 a += 1
             print('shabih tarin: ' + str(shabih_tarin) , '|| darsad shebaht :' + str(shebahat))
             if shabih_tarin2 != None and shebahat > .45:
-                t8 = str(random.choice(f2[shabih_tarin2]))
-                jj = hasInsult(t8)
-                if jj[0] != True:
-                    bot.sendMessage(chat['object_guid'], t8, chat['last_message']['message_id'])
+                bot.sendMessage(chat['object_guid'], str(random.choice(f2[shabih_tarin2])), chat['last_message']['message_id'])
             t = True
         except:
-            print('test error new server or code')
+            print('server rubika err')
 
-def get_backup(text,chat,bot,auths:list):
-    if bot != None:
+def get_backup(text,chat,bot):
+    try:
         b2 = open('farsi-dic.json','rb').read()
         tx = bot.requestFile('farsi-dic.json', len(b2), 'json')
-        if tx != 'many_request':
-            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-            bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
-        else:    
-            print('many request')
-            bot2 = Bot(auths[1])
-            tx = bot2.requestFile('farsi-dic.json', len(b2), 'json')
-            if tx != 'many_request':
-                access = bot2.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                bot2.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
-            else:
-                print('many request err')
-                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
-        
-        #send verfied users file
-        b2 = open('verfied_users.txt','rb').read()
-        tx = bot.requestFile('verfied_users.txt', len(b2), 'txt')
-        if tx != 'many_request':
-            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-            bot.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'verfied_users.txt', len(b2), message_id=chat['last_message']['message_id'])
-        else:    
-            print('many request')
-            bot2 = Bot(auths[1])
-            tx = bot2.requestFile('verfied_users.txt', len(b2), 'txt')
-            if tx != 'many_request':
-                access = bot2.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                bot2.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'verfied_users.txt', len(b2), message_id=chat['last_message']['message_id'])
-            else:
-                print('many request err')
-                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
-        
-        #send black users file
-        b2 = open('black_list.txt','rb').read()
-        tx = bot.requestFile('black_list.txt', len(b2), 'txt')
-        if tx != 'many_request':
-            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-            bot.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'black_list.txt', len(b2), message_id=chat['last_message']['message_id'])
-        else:    
-            print('many request')
-            bot2 = Bot(auths[1])
-            tx = bot2.requestFile('black_list.txt', len(b2), 'txt')
-            if tx != 'many_request':
-                access = bot2.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                bot2.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'black_list.txt', len(b2), message_id=chat['last_message']['message_id'])
-            else:
-                print('many request err')
-                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
-        
-        #send qroz admins file
-        b2 = open('qrozAdmins.txt','rb').read()
-        tx = bot.requestFile('qrozAdmins.txt', len(b2), 'txt')
-        if tx != 'many_request':
-            access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-            bot.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'qrozAdmins.txt', len(b2), message_id=chat['last_message']['message_id'])
-        else:    
-            print('many request')
-            bot2 = Bot(auths[1])
-            tx = bot2.requestFile('qrozAdmins.txt', len(b2), 'txt')
-            if tx != 'many_request':
-                access = bot2.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
-                bot2.sendFile(chat['object_guid'] ,tx['id'] , 'txt', tx['dc_id'] , access, 'qrozAdmins.txt', len(b2), message_id=chat['last_message']['message_id'])
-                bot.sendMessage(chat['object_guid'], 'نسخه پشتیبان با موفقیت تهیه گردید' , chat['last_message']['message_id'])
-            else:
-                print('many request err')
-                bot.sendMessage(chat['object_guid'], 'در حال حاضر بات قادر به ارسال فایل نمی باشد' , chat['last_message']['message_id'])
-    else:
+        access = bot.fileUpload(b2, tx['access_hash_send'], tx['id'], tx['upload_url'])
+        bot.sendFile(chat['object_guid'] ,tx['id'] , 'json', tx['dc_id'] , access, 'farsi-dic.json', len(b2), message_id=chat['last_message']['message_id'])
+    except:
         print('back err')
 
 def code_run(text,chat,bot,lang_id):
@@ -834,345 +791,407 @@ def code_run(text,chat,bot,lang_id):
 
 g_usvl = ''
 test_usvl = ''
-auth = "tjsxqinipkzoaujzslkxcekbaagpjqge"
+auth = "oyhipturgvicvpapyzjzjqpsft"
 bot = Bot(auth)
 list_message_seened = []
 time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
 while(2 > 1):
     try:
         chats_list:list = bot.get_updates_all_chats()
+        qrozAdmins = open('qrozAdmins.txt','r').read().split('\n')
         if chats_list != []:
             for chat in chats_list:
                 access = chat['access']
                 if chat['abs_object']['type'] == 'User' or chat['abs_object']['type'] == 'Group':
                     text:str = chat['last_message']['text']
-                    qrozAdmins = open('qrozAdmins.txt','r').read().split('\n')
-                    if 'SendMessages' in access and chat['last_message']['type'] == 'Text' and text.strip() != '':                    
+                    if 'SendMessages' in access and chat['last_message']['type'] == 'Text' and text.strip() != '':
                         text = text.strip()
                         m_id = chat['object_guid'] + chat['last_message']['message_id']
                         if not m_id in list_message_seened:
-                            verfied_users = open('verfied_users.txt','r').read().split('\n')
-                            black_users = open('black_list.txt','r').read().split('\n')
                             print('new message')
-                            accept = True
-                            if chat['abs_object']['type'] == 'User' and not chat['object_guid'] in qrozAdmins and open('your_channel.txt','r').read() != '' and not chat['object_guid'] in black_users:
-                                if not chat['object_guid'] in verfied_users:
-                                    is_joined = bot.checkJoinChannel(chat['object_guid'], open('your_channel.txt','r').read())
-                                    if is_joined == 'no exist':
-                                        accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا عضو کانال زیر شوید \n@over_games\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
-                                    elif is_joined == 'need for username' or is_joined == 'Profile not success':
-                                        accept = False
-                                        bot.sendMessage(chat['object_guid'], '❤\nکاربر گرامی برای استفاده از ربات ابتدا نام کاربری خود را تنظیم کنید یا نام و نام خانوادگی را به متنی مفهوم تغییر دهید\nسپس در صورت عضو نبودن عضو کانال زیر شوید \n@learn_b4a\n\n سپس پیام زیر را بفرستید \n\n!start\n❤')
-                                    elif is_joined == 'is exist':
-                                        fp = open('verfied_users.txt','a')
-                                        fp.write('\n' + chat['object_guid'])
-                                        fp.close()
-                                        if text.startswith('!') == False:
-                                            bot.sendMessage(chat['object_guid'], 'برای استفاده از ربات دستور زیر را بفرستید\n!start\n❤')
-                                        accept = True
+                            if text == '!start' or text == '/start' or text == 'شروع' or text == 'استارت':
+                                print('message geted and sinned')
+                                try:
+                                    bot.sendMessage(chat['object_guid'], 'سلام دوست عزیز. \n به استریک بات خوش اومدی🚭🧡 \n برای دریافت لیست دستورا‌ت کلمه زیر را بفرستید تابرای شما ارسال گردد \n /help \n کانال ما جوین اجباری @mamadcoder ',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'جوک' or text == 'دستورات' or text == 'بیو' or text == 'خاطره' or text == 'په نه په' or text == 'پ ن پ' or text == 'قوانین' or text == 'دانستنی' or text == 'دانش' or text == 'الکی' or text == 'الکی مثلا' or text == 'ذکر' or text == 'دیالوگ' or text == 'خبر' or text == 'اخبار' or text == 'حدیث' or text == 'سرچ' or text == 'سرگرمی' or text == 'کاربردی' or text == 'شات' or text == 'بگو' or text == 'سرچ عکس':
+                                print('message geted and sinned')
+                                try:
+                                    bot.sendMessage(chat['object_guid'], 'دوست عزیز لطفا دستورات را درست وارد نمایید.',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == '.' or text == '‌' or text == '‌.‌' or text == '.‌' or text == '‌.‌.' or text == '۰':
+                                print('message geted and sinned')
+                                try:
 
-                            elif chat['object_guid'] in black_users:
-                                accept = False
-                            if accept == True:        
-                                if text == '!start':
-                                    print('message geted and sinned')
+                                    bot.sendMessage(chat['object_guid'], 'باباش واسش نت نمیخره😂‌',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'چخبر' or text == 'چه خبر' or text == 'چ خبر' or text == 'جخبر' or text == 'چهخیر' or text == 'چح خبر':
+                                print('message geted and sinned')
+                                try:
+                                    
+                                    bot.sendMessage(chat['object_guid'], 'سلامتی عشقم',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'ربات' or text == 'رباط' or text == 'روبات' or text == 'بات' or text == 'روباط' or text == 'استریک':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'جونم نفسم?💙📿',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == '😂' or text == '😁' or text == '🙂' or text == '🤣' or text == '😃' or text == '😅':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'جوون تو فقط بخند🤤🌭',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'خوبی' or text == 'خوبیح' or text == 'خویی' or text == 'خوبی؟' or text == 'خوبیح؟' or text == 'خبی':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'خبم ت چطوری🤤',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'سلام' or text == 'صل' or text == 'سیلام' or text == 'س' or text == 'صلام' or text == 'سل':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'سلام عزیزم❤️😍',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == '/zaman' :
+                                print('message geted and sinned')
+                                try:
+                                    date = _date_time.historyIran()
+                                    time = _date_time.hourIran()
+
+                                    bot.sendMessage(chat['object_guid'], 'تاریخ: \n' + date + '\nساعت:\n'+ time,chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == '/date' :
+                                print('message geted and sinned')
+                                try:
+                                    date = _date_time.historyIran()
+
+                                    bot.sendMessage(chat['object_guid'], 'تاریخ \n' + date ,chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == '/time' :
+                                print('message geted and sinned')
+                                try:
+                                    time = _date_time.hourIran()
+
+                                    bot.sendMessage(chat['object_guid'], 'ساعت  \n' + time ,chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'منم خبم' or text == 'منم خوبم' or text == 'منم خبمح' or text == 'خوبم' or text == 'خبم' or text == 'خبمح':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'شٌکر خوب بمونی',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'تست' or text == 'test' or text == '!test' or text == '/test' or text == '/Test' or text == '!Test':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'strik on',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            if text == 'لینک' or text == 'مدیر' or text == 'مدیر کیه' or text == 'لینک گپ' or text == 'کی مدیره' or text == 'ادمین':
+                                print('message geted and sinned')
+                                try:
+
+                                    bot.sendMessage(chat['object_guid'], 'لینک گپ: @mamadcoder \n مدیر: @mamadcoder \n ریپ چته مدیر گپ بزن لینک بده',chat['last_message']['message_id'])
+                                    print('sended response')    
+                                except:
+                                    print('server bug1')
+                            elif text.startswith('!nim http://') == True or text.startswith('!nim https://') == True:
+                                try:
+                                    bot.sendMessage(chat['object_guid'], "در حال آماده سازی لینک ...",chat['last_message']['message_id'])
+                                    print('sended response')
+                                    link = text[4:]
+                                    nim_baha_link=requests.post("https://www.digitalbam.ir/DirectLinkDownloader/Download",params={'downloadUri':link})
+                                    pg:str = nim_baha_link.text
+                                    pg = pg.split('{"fileUrl":"')
+                                    pg = pg[1]
+                                    pg = pg.split('","message":""}')
+                                    pg = pg[0]
+                                    nim_baha = pg    
                                     try:
-                                        bot.sendMessage(chat['object_guid'], 'سلام \n به ابر سرویس کروز خوش آمدید ❤\n\n لطفا جهت راهنما \n!help \nرا ارسال کنید',chat['last_message']['message_id'])
+                                        bot.sendMessage(chat['object_guid'], 'لینک نیم بها شما با موفقیت آماده شد ✅ \n لینک : \n' + nim_baha ,chat['last_message']['message_id'])
                                         print('sended response')    
                                     except:
-                                        print('server bug1')
-                                elif text.startswith('!nim http://') == True or text.startswith('!nim https://') == True:
-                                    try:
-                                        bot.sendMessage(chat['object_guid'], "در حال آماده سازی لینک ...",chat['last_message']['message_id'])
-                                        print('sended response')
-                                        link = text[4:]
-                                        nim_baha_link=requests.post("https://www.digitalbam.ir/DirectLinkDownloader/Download",params={'downloadUri':link})
-                                        pg:str = nim_baha_link.text
-                                        pg = pg.split('{"fileUrl":"')
-                                        pg = pg[1]
-                                        pg = pg.split('","message":""}')
-                                        pg = pg[0]
-                                        nim_baha = pg    
-                                        try:
-                                            bot.sendMessage(chat['object_guid'], 'لینک نیم بها شما با موفقیت آماده شد ✅ \n لینک : \n' + nim_baha ,chat['last_message']['message_id'])
-                                            print('sended response')    
-                                        except:
-                                            print('server bug2')
-                                    except:
-                                        print('server bug3')
-                                elif text.startswith('!info @'):
-                                    tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
-                                    tawd10.start()
-                                elif text.startswith('!search ['):
-                                    tawd11 = Thread(target=search, args=(text, chat, bot,))
-                                    tawd11.start()
-                                elif text.startswith('!wiki-s ['):
-                                    try:
-                                        search = text[9:-1]    
-                                        search = search + ' ویکی پدیا'
-                                        if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':                               
-                                            jd = json.loads(requests.get('https://zarebin.ir/api/?q=' + search + '&page=1&limit=10').text)
-                                            results = jd['results']['webs'][0:4]
-                                            text = ''
-                                            for result in results:
-                                                if ' - ویکی‌پدیا، دانشنامهٔ آزاد' in result['title']:
-                                                    title = result['title'].replace(' - ویکی‌پدیا، دانشنامهٔ آزاد','')
-                                                    text += title + ' :\n\n' + str(result['description']).replace('</em>', '').replace('<em>', '').replace('(Meta Search Engine)', '').replace('&quot;', '').replace(' — ', '').replace(' AP', '') + '\n\nمقاله کامل صفحه 1 : \n' + '!wiki [1:' + title + ']\n\n' 
-                                            bot.sendMessage(chat['object_guid'], 'نتایج به پیوی شما ارسال شد', chat['last_message']['message_id'])
-                                            bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + search + ') : \n\n'+text)
-                                        elif chat['abs_object']['type'] == 'User':
-                                            jd = json.loads(requests.get('https://zarebin.ir/api/?q=' + search + '&page=1&limit=10').text)
-                                            results = jd['results']['webs'][0:4]
-                                            text = ''
-                                            for result in results:
-                                                if ' - ویکی‌پدیا، دانشنامهٔ آزاد' in result['title']:
-                                                    title = result['title'].replace(' - ویکی‌پدیا، دانشنامهٔ آزاد','')
-                                                    text += title + ' :\n\n' + str(result['description']).replace('</em>', '').replace('<em>', '').replace('(Meta Search Engine)', '').replace('&quot;', '').replace(' — ', '').replace(' AP', '') + '\n\nمقاله کامل صفحه 1 : \n' + '!wiki [1:' + title + ']\n\n'
+                                        print('server bug2')
+                                except:
+                                    print('server bug3')
+                            elif text.startswith('!strik @'):
+                                tawd10 = Thread(target=info_qroz, args=(text, chat, bot,))
+                                tawd10.start()
+                            elif text.startswith('!srch ['):
+                                tawd11 = Thread(target=search, args=(text, chat, bot,))
+                                tawd11.start()
+                            elif text.startswith('!wiki-s ['):
+                                try:
+                                    search = text[9:-1]    
+                                    search = search + 'ویکی پدیا'
+                                    if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':                               
+                                        jd = json.loads(requests.get('https://zarebin.ir/api/?q=' + search + '&page=1&limit=10').text)
+                                        results = jd['results']['webs'][0:4]
+                                        text = ''
+                                        for result in results:
+                                            if ' - ویکی‌پدیا، دانشنامهٔ آزاد' in result['title']:
+                                                title = result['title'].replace(' - ویکی‌پدیا، دانشنامهٔ آزاد','')
+                                                text += title + ' :\n\n' + str(result['description']).replace('</em>', '').replace('<em>', '').replace('(Meta Search Engine)', '').replace('&quot;', '').replace(' — ', '').replace(' AP', '') + '\n\nمقاله کامل صفحه 1 : \n' + '!wiki [1:' + title + ']\n\n' 
+                                        bot.sendMessage(chat['object_guid'], 'نتایج به پیوی شما ارسال شد', chat['last_message']['message_id'])
+                                        bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + search + ') : \n\n'+text)
+                                    elif chat['abs_object']['type'] == 'User':
+                                        jd = json.loads(requests.get('https://zarebin.ir/api/?q=' + search + '&page=1&limit=10').text)
+                                        results = jd['results']['webs'][0:4]
+                                        text = ''
+                                        for result in results:
+                                            if ' - ویکی‌پدیا، دانشنامهٔ آزاد' in result['title']:
+                                                title = result['title'].replace(' - ویکی‌پدیا، دانشنامهٔ آزاد','')
+                                                text += title + ' :\n\n' + str(result['description']).replace('</em>', '').replace('<em>', '').replace('(Meta Search Engine)', '').replace('&quot;', '').replace(' — ', '').replace(' AP', '') + '\n\nمقاله کامل صفحه 1 : \n' + '!wiki [1:' + title + ']\n\n'
+                                        bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
+                                except:
+                                    print('wiki s err')
+                            elif text.startswith('/jok'):
+                                tawd9 = Thread(target=joker, args=(text, chat, bot,))
+                                tawd9.start()
+                            elif text.startswith('/name'):
+                                tawd32 = Thread(target=name_shakh, args=(text, chat, bot,))
+                                tawd32.start()
+                            elif text.startswith('/khatere'):
+                                tawd29 = Thread(target=get_khatere, args=(text, chat, bot,))
+                                tawd29.start()
+                            elif text.startswith('/khabar'):
+                                tawd29 = Thread(target=get_khabar, args=(text, chat, bot,))
+                                tawd29.start()
+                            elif text.startswith('/danesh'):
+                                tawd30 = Thread(target=get_danesh, args=(text, chat, bot,))
+                                tawd30.start()
+                            elif text.startswith('/panapa'):
+                                tawd24 = Thread(target=get_pa_na_pa, args=(text, chat, bot,))
+                                tawd24.start()
+                            elif text.startswith('/alaki'):
+                                tawd31 = Thread(target=get_alaki_masala, args=(text, chat, bot,))
+                                tawd31.start()
+                            elif text.startswith('/hadis'):
+                                tawd31 = Thread(target=get_hadis, args=(text, chat, bot,))
+                                tawd31.start()
+                            elif text.startswith('/zekr'):
+                                tawd31 = Thread(target=get_zekr, args=(text, chat, bot,))
+                                tawd31.start()
+                            elif text.startswith('/dastan'):
+                                tawd25 = Thread(target=get_dastan, args=(text, chat, bot,))
+                                tawd25.start()
+                            elif text.startswith('/bio'):
+                                tawd27 = Thread(target=get_bio, args=(text, chat, bot,))
+                                tawd27.start()
+                            elif text.startswith('/dialog'):
+                                tawd27 = Thread(target=get_dialog, args=(text, chat, bot,))
+                                tawd27.start()
+                            elif text.startswith('/mont'):
+                                tawd27 = Thread(target=get_sebt, args=(text, chat, bot,))
+                                tawd27.start()
+                            elif text.startswith('!srch-k ['):
+                                tawd26 = Thread(target=get_search_k, args=(text, chat, bot,))
+                                tawd26.start()
+                            elif text.startswith('!rim [') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
+                                try:
+                                    user = text[6:-1].replace('@', '')
+                                    guid = bot.getInfoByUsername(user)["data"]["chat"]["abs_object"]["object_guid"]
+                                    admins = [i["member_guid"] for i in bot.getGroupAdmins(chat['object_guid'])["data"]["in_chat_members"]]
+                                    if not guid in admins and chat['last_message']['author_object_guid'] in admins:
+                                        bot.banGroupMember(chat['object_guid'], guid)
+                                        bot.sendMessage(chat['object_guid'], 'انجام شد' , chat['last_message']['message_id'])
+                                except:
+                                    print('ban bug')
+                            elif text.startswith('!srch-p ['):
+                                print('mpa started')
+                                tawd = Thread(target=search_i, args=(text, chat, bot,))
+                                tawd.start()
+                            elif text.startswith('!ban') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
+                                print('mpa started')
+                                tawd2 = Thread(target=uesr_remove, args=(text, chat, bot,))
+                                tawd2.start()
+                            elif text.startswith('!trans ['):
+                                tawd28 = Thread(target=get_trans, args=(text, chat, bot,))
+                                tawd28.start()
+                            elif text.startswith('!myket ['):
+                                try:
+                                    search = text[10:-1]
+                                    if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':
+                                        bot.sendMessage(chat['object_guid'], 'نتایج کامل به زودی به پیوی شما ارسال میشوند', chat['last_message']['message_id'])                           
+                                        jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
+                                        jd = jd['search']
+                                        a = 0
+                                        text = ''
+                                        for j in jd:
+                                            if a <= 7:
+                                                text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
+                                                a += 1
+                                            else:
+                                                break     
+                                        if text != '':
+                                            bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + search + ') : \n\n'+text)                               
+                                    elif chat['abs_object']['type'] == 'User':
+                                        jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
+                                        jd = jd['search']
+                                        a = 0
+                                        text = ''
+                                        for j in jd:
+                                            if a <= 7:
+                                                text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
+                                                a += 1
+                                            else:
+                                                break     
+                                        if text != '':
                                             bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
-                                    except:
-                                        print('wiki s err')
-                                elif text.startswith('!jok'):
-                                    tawd9 = Thread(target=joker, args=(text, chat, bot,))
-                                    tawd9.start()
-                                elif text.startswith('!name_shakh'):
-                                    tawd32 = Thread(target=name_shakh, args=(text, chat, bot,))
-                                    tawd32.start()
-                                elif text.startswith('!khatere'):
-                                    tawd29 = Thread(target=get_khatere, args=(text, chat, bot,))
-                                    tawd29.start()
-                                elif text.startswith('!danesh'):
-                                    tawd30 = Thread(target=get_danesh, args=(text, chat, bot,))
-                                    tawd30.start()
-                                elif text.startswith('!pa_na_pa'):
-                                    tawd24 = Thread(target=get_pa_na_pa, args=(text, chat, bot,))
-                                    tawd24.start()
-                                elif text.startswith('!alaki_masala'):
-                                    tawd31 = Thread(target=get_alaki_masala, args=(text, chat, bot,))
-                                    tawd31.start()
-                                elif text.startswith('!dastan'):
-                                    tawd25 = Thread(target=get_dastan, args=(text, chat, bot,))
-                                    tawd25.start()
-                                elif text.startswith('!bio'):
-                                    tawd27 = Thread(target=get_bio, args=(text, chat, bot,))
-                                    tawd27.start()
-                                elif text.startswith('!search-k ['):
-                                    tawd26 = Thread(target=get_search_k, args=(text, chat, bot,))
-                                    tawd26.start()
-                                elif text.startswith('!ban [') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
-                                    try:
-                                        user = text[6:-1].replace('@', '')
-                                        guid = bot.getInfoByUsername(user)["data"]["chat"]["abs_object"]["object_guid"]
-                                        admins = [i["member_guid"] for i in bot.getGroupAdmins(chat['object_guid'])["data"]["in_chat_members"]]
-                                        if not guid in admins and chat['last_message']['author_object_guid'] in admins:
-                                            bot.banGroupMember(chat['object_guid'], guid)
-                                            bot.sendMessage(chat['object_guid'], 'انجام شد' , chat['last_message']['message_id'])
-                                    except:
-                                        print('ban bug')
-                                elif text.startswith('!search-i ['):
-                                    print('mpa started')
-                                    tawd = Thread(target=search_i, args=(text, chat, bot,))
-                                    tawd.start()
-                                elif text.startswith('!remove') and chat['abs_object']['type'] == 'Group' and 'BanMember' in access:
-                                    print('mpa started')
-                                    tawd2 = Thread(target=uesr_remove, args=(text, chat, bot,))
-                                    tawd2.start()
-                                elif text.startswith('!trans ['):
-                                    tawd28 = Thread(target=get_trans, args=(text, chat, bot,))
-                                    tawd28.start()
-                                elif text.startswith('!myket-s ['):
-                                    try:
-                                        search = text[10:-1]
-                                        if hasInsult(search)[0] == False and chat['abs_object']['type'] == 'Group':
-                                            bot.sendMessage(chat['object_guid'], 'نتایج کامل به زودی به پیوی شما ارسال میشوند', chat['last_message']['message_id'])                           
-                                            jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
-                                            jd = jd['search']
-                                            a = 0
-                                            text = ''
-                                            for j in jd:
-                                                if a <= 7:
-                                                    text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
-                                                    a += 1
-                                                else:
-                                                    break     
-                                            if text != '':
-                                                bot.sendMessage(chat['last_message']['author_object_guid'], 'نتایج یافت شده برای (' + search + ') : \n\n'+text)                               
-                                        elif chat['abs_object']['type'] == 'User':
-                                            jd = json.loads(requests.get('https://www.wirexteam.ga/myket?type=search&query=' + search).text)
-                                            jd = jd['search']
-                                            a = 0
-                                            text = ''
-                                            for j in jd:
-                                                if a <= 7:
-                                                    text += '🔸 عنوان : ' + j['title_fa'] + '\nℹ️ توضیحات : '+ j['tagline'] + '\n🆔 نام یکتا برنامه : ' + j['package_name'] + '\n⭐️امتیاز: ' + str(j['rate']) + '\n✳ نام نسخه : ' + j['version'] + '\nقیمت : ' + j['price'] + '\nحجم : ' + j['size'] + '\nبرنامه نویس : ' + j['developer'] + '\n\n' 
-                                                    a += 1
-                                                else:
-                                                    break     
-                                            if text != '':
-                                                bot.sendMessage(chat['object_guid'], text , chat['last_message']['message_id'])
-                                    except:
-                                        print('myket server err')
-                                elif text.startswith('!wiki ['):
-                                    tawd23 = Thread(target=get_wiki, args=(text, chat, bot,))
-                                    tawd23.start()
-                                elif text.startswith('!currency'):
-                                    print('mpa started')
-                                    tawd15 = Thread(target=get_curruncy, args=(text, chat, bot,))
-                                    tawd15.start()
-                                elif text.startswith('!gold'):
-                                    tawd22 = Thread(target=get_gold, args=(text, chat, bot,))
-                                    tawd22.start()
-                                elif text.startswith('!ping ['):
-                                    tawd21 = Thread(target=get_ping, args=(text, chat, bot,))
-                                    tawd21.start()
-                                elif text.startswith('!font ['):
-                                    tawd20 = Thread(target=get_font, args=(text, chat, bot,))
-                                    tawd20.start()
-                                elif text.startswith('!font-fa ['):
-                                    tawd34 = Thread(target=get_font_fa, args=(text, chat, bot,))
-                                    tawd34.start()
-                                elif text.startswith('!whois ['):
-                                    tawd19 = Thread(target=get_whois, args=(text, chat, bot,))
-                                    tawd19.start()
-                                elif text.startswith('!vaj ['):
-                                    tawd33 = Thread(target=get_vaj, args=(text, chat, bot,))
-                                    tawd33.start()
-                                elif text.startswith('!weather ['):
-                                    tawd18 = Thread(target=get_weather, args=(text, chat, bot,))
-                                    tawd18.start()
-                                elif text.startswith('!ip ['):
-                                    tawd17 = Thread(target=get_ip, args=(text, chat, bot,))
-                                    tawd17.start()
-                                elif text.startswith("!add [") and chat['abs_object']['type'] == 'Group' and 'AddMember' in access:
-                                    try:
-                                        user = text[6:-1]
-                                        bot.invite(chat['object_guid'], [bot.getInfoByUsername(user.replace('@', ''))["data"]["chat"]["object_guid"]])
-                                        bot.sendMessage(chat['object_guid'], 'اضافه شد' , chat['last_message']['message_id'])                         
-                                    except:
-                                        print('add not successd')  
-                                elif text.startswith('!math ['):
-                                    try:
-                                        amal_and_value = text[7:-1]
-                                        natije = ''
-                                        if amal_and_value.count('*') == 1:
-                                            value1 = float(amal_and_value.split('*')[0].strip())
-                                            value2 = float(amal_and_value.split('*')[1].strip())
-                                            natije = value1 * value2
-                                        elif amal_and_value.count('/') > 0:
-                                            value1 = float(amal_and_value.split('/')[0].strip())
-                                            value2 = float(amal_and_value.split('/')[1].strip())
-                                            natije = value1 / value2
-                                        elif amal_and_value.count('+') > 0:
-                                            value1 = float(amal_and_value.split('+')[0].strip())
-                                            value2 = float(amal_and_value.split('+')[1].strip())
-                                            natije = value1 + value2
-                                        elif amal_and_value.count('-') > 0:
-                                            value1 = float(amal_and_value.split('-')[0].strip())
-                                            value2 = float(amal_and_value.split('-')[1].strip())
-                                            natije = value1 - value2
-                                        elif amal_and_value.count('**') > 0:
-                                            value1 = float(amal_and_value.split('**')[0].strip())
-                                            value2 = float(amal_and_value.split('**')[1].strip())
-                                            natije = value1 ** value2
-                                        
-                                        if natije != '':
-                                            bot.sendMessage(chat['object_guid'], natije , chat['last_message']['message_id'])
-                                    except:
-                                        print('math err')  
-                                elif text.startswith('!shot'):
-                                    tawd16 = Thread(target=shot_image, args=(text, chat, bot,))
-                                    tawd16.start()
-                                elif text.startswith('!speak'):
-                                    print('mpa started')
-                                    tawd6 = Thread(target=speak_after, args=(text, chat, bot,))
-                                    tawd6.start()
-                                elif text.startswith('!p_danesh'):
-                                    tawd12 = Thread(target=p_danesh, args=(text, chat, bot,))
-                                    tawd12.start()
-                                elif text.startswith('!write ['):
-                                    print('mpa started')
-                                    tawd5 = Thread(target=write_image, args=(text, chat, bot,))
-                                    tawd5.start()
-                                elif text.startswith('!qroz'):
-                                    print('qroz lovolier for ever (:')
-                                    tawd45 = Thread(target=get_qroz_me, args=(text, chat, bot,))
-                                    tawd45.start()
-                                elif text.startswith('!code_'):
-                                    text2 = text.replace('!code_','')
-                                    dict_langs = {'c#':1,'java':4,'js':17,'kotlin':43,'nodejs':23,'perl':13,'php':8,'py':24,'ruby':12}
-                                    if text2 in dict_langs.keys():
-                                        tawd46 = Thread(target=code_run, args=(text, chat, bot, dict_langs[text2],))
-                                        tawd46.start()
-                                elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasInsult(text)[0] == True:
-                                    tawd13 = Thread(target=anti_insult, args=(text, chat, bot,))
-                                    tawd13.start()
-                                elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasAds(text) == True:
-                                    tawd14 = Thread(target=anti_tabligh, args=(text, chat, bot,))
-                                    tawd14.start()
-                                elif text.startswith('!help'):
-                                    tawd38 = Thread(target=get_help, args=(text, chat, bot,))
-                                    tawd38.start()
-                                elif text.startswith('!lang_help'):
-                                    tawd47 = Thread(target=get_lang_help, args=(text, chat, bot,))
-                                    tawd47.start()
-                                elif text.startswith('!usvl_start') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '':
-                                    g_usvl = chat['object_guid']
-                                    print('usvl started on ' + g_usvl)
-                                    bot.sendMessage(chat['object_guid'], 'usvl is started', chat['last_message']['message_id'])
-                                elif text.startswith('!usvl_stop') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl != '':
-                                    print('usvl sttoped on ' + g_usvl)
-                                    g_usvl = ''
-                                    bot.sendMessage(chat['object_guid'], 'usvl is stopped', chat['last_message']['message_id'])  
-                                elif text.startswith('!usvl_test') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '' and test_usvl == '':
-                                    test_usvl = chat['object_guid']
-                                    print('usvl started test on ' + test_usvl)
-                                    bot.sendMessage(chat['object_guid'], 'test usvl is started', chat['last_message']['message_id'])
-                                elif text.startswith('!usvl_untest') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and test_usvl == chat['object_guid']:
-                                    print('usvl stopped test on ' + test_usvl)
-                                    test_usvl = ''
-                                    bot.sendMessage(chat['object_guid'], 'test usvl is stopped', chat['last_message']['message_id'])   
-                                elif text.startswith('!backup') and chat['object_guid'] in qrozAdmins:
-                                    tawd44 = Thread(target=get_backup, args=(text, chat, bot, auths,))
-                                    tawd44.start()
-                                elif text.startswith('!black [') and chat['object_guid'] in qrozAdmins:
-                                    try:
-                                        guid = text[8:-1]
-                                        if len(guid) == 32 and not guid in black_users:
-                                            fp = open('black_list.txt','a')
-                                            fp.write('\n' + guid)
-                                            fp.close()
-                                            bot.sendMessage(guid, 'متاسفانه شما فعلا به لیست سیاه کروز اضافه شدید')
-                                    except:
-                                        print('black list err')
-                                elif text.startswith('!unblack [') and chat['object_guid'] in qrozAdmins:
-                                    try:
-                                        guid = text[10:-1]
-                                        if len(guid) == 32 and guid in black_users:
-                                            black_users = open('black_list.txt','r').read()
-                                            bl = open('black_list.txt','w')
-                                            bl.write(black_users.replace('\n' + guid, ''))
-                                            bl.close()
-                                            bot.sendMessage(guid, 'خوشبختانه از لیست سیاه کروز بیرون آمدید')
-                                    except:
-                                        print('black list err')
-                                elif chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and text.startswith('!black') and not chat['object_guid'] in black_users:
-                                    fp = open('black_list.txt','a')
-                                    fp.write('\n'+ chat['object_guid'])
-                                    fp.close()
-                                    bot.sendMessage(chat['object_guid'], 'گروه به لیست سیاه کروز اضافه گردید ):')
-                                elif chat['object_guid'] == g_usvl and chat['last_message']['author_object_guid'] != open('me_guid.txt','r').read() and chat['abs_object']['type'] == 'Group' and not text.startswith('!'):
-                                    tawd42 = Thread(target=usvl_save_data, args=(text, chat, bot, auths,))
-                                    tawd42.start()
-                                elif test_usvl == chat['object_guid'] and chat['last_message']['author_object_guid'] != open('me_guid.txt','r').read() and chat['abs_object']['type'] == 'Group' and not text.startswith('!'):
-                                    print('usvl tested')
-                                    tawd43 = Thread(target=usvl_test_data, args=(text, chat, bot,))
-                                    tawd43.start()
-                            elif chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and text.startswith('!unblack') and chat['object_guid'] in black_users:
-                                black_users = open('black_list.txt','r').read()
-                                bl = open('black_list.txt','w')
-                                bl.write(black_users.replace('\n' + chat['object_guid'], ''))
-                                bl.close()
-                                bot.sendMessage(chat['object_guid'], 'گروه از لیست سیاه کروز در آمد (:')
+                                except:
+                                    print('myket server err')
+                            elif text.startswith('!viki ['):
+                                tawd23 = Thread(target=get_wiki, args=(text, chat, bot,))
+                                tawd23.start()
+                            elif text.startswith('/arz'):
+                                print('mpa started')
+                                tawd15 = Thread(target=get_curruncy, args=(text, chat, bot,))
+                                tawd15.start()
+                            elif text.startswith('/gold'):
+                                tawd22 = Thread(target=get_gold, args=(text, chat, bot,))
+                                tawd22.start()
+                            elif text.startswith('!ping ['):
+                                tawd21 = Thread(target=get_ping, args=(text, chat, bot,))
+                                tawd21.start()
+                            elif text.startswith('!font-en ['):
+                                tawd20 = Thread(target=get_font, args=(text, chat, bot,))
+                                tawd20.start()
+                            elif text.startswith('!font-fa ['):
+                                tawd34 = Thread(target=get_font_fa, args=(text, chat, bot,))
+                                tawd34.start()
+                            elif text.startswith('!whois ['):
+                                tawd19 = Thread(target=get_whois, args=(text, chat, bot,))
+                                tawd19.start()
+                            elif text.startswith('!vaj ['):
+                                tawd33 = Thread(target=get_vaj, args=(text, chat, bot,))
+                                tawd33.start()
+                            elif text.startswith('!hvs ['):
+                                tawd18 = Thread(target=get_weather, args=(text, chat, bot,))
+                                tawd18.start()
+                            elif text.startswith('!ip ['):
+                                tawd17 = Thread(target=get_ip, args=(text, chat, bot,))
+                                tawd17.start()
+                            elif text.startswith("!add [") and chat['abs_object']['type'] == 'Group' and 'AddMember' in access:
+                                try:
+                                    user = text[6:-1]
+                                    bot.invite(chat['object_guid'], [bot.getInfoByUsername(user.replace('@', ''))["data"]["chat"]["object_guid"]])
+                                    bot.sendMessage(chat['object_guid'], 'اضافه شد' , chat['last_message']['message_id'])                         
+                                except:
+                                    print('add not successd')  
+                            elif text.startswith('!math ['):
+                                try:
+                                    amal_and_value = text[7:-1]
+                                    natije = ''
+                                    if amal_and_value.count('*') == 1:
+                                        value1 = float(amal_and_value.split('*')[0].strip())
+                                        value2 = float(amal_and_value.split('*')[1].strip())
+                                        natije = value1 * value2
+                                    elif amal_and_value.count('/') > 0:
+                                        value1 = float(amal_and_value.split('/')[0].strip())
+                                        value2 = float(amal_and_value.split('/')[1].strip())
+                                        natije = value1 / value2
+                                    elif amal_and_value.count('+') > 0:
+                                        value1 = float(amal_and_value.split('+')[0].strip())
+                                        value2 = float(amal_and_value.split('+')[1].strip())
+                                        natije = value1 + value2
+                                    elif amal_and_value.count('-') > 0:
+                                        value1 = float(amal_and_value.split('-')[0].strip())
+                                        value2 = float(amal_and_value.split('-')[1].strip())
+                                        natije = value1 - value2
+                                    elif amal_and_value.count('**') > 0:
+                                        value1 = float(amal_and_value.split('**')[0].strip())
+                                        value2 = float(amal_and_value.split('**')[1].strip())
+                                        natije = value1 ** value2
+                                    
+                                    if natije != '':
+                                        bot.sendMessage(chat['object_guid'], natije , chat['last_message']['message_id'])
+                                except:
+                                    print('math err')  
+                            elif text.startswith('!shot'):
+                                tawd16 = Thread(target=shot_image, args=(text, chat, bot,))
+                                tawd16.start()
+                            elif text.startswith('!bgo'):
+                                print('mpa started')
+                                tawd6 = Thread(target=speak_after, args=(text, chat, bot,))
+                                tawd6.start()
+                            elif text.startswith('/danpic'):
+                                tawd12 = Thread(target=p_danesh, args=(text, chat, bot,))
+                                tawd12.start()
+                            elif text.startswith('!write ['):
+                                print('mpa started')
+                                tawd5 = Thread(target=write_image, args=(text, chat, bot,))
+                                tawd5.start()
+                            elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasInsult(text)[0] == True:
+                                tawd13 = Thread(target=anti_insult, args=(text, chat, bot,))
+                                tawd13.start()
+                            elif chat['abs_object']['type'] == 'Group' and 'DeleteGlobalAllMessages' in access and hasAds(text) == True:
+                                tawd14 = Thread(target=anti_tabligh, args=(text, chat, bot,))
+                                tawd14.start()
+                            elif text.startswith('/help'):
+                                tawd38 = Thread(target=get_help, args=(text, chat, bot,))
+                                tawd38.start()
+                            elif text.startswith('/karbordi'):
+                                tawd38 = Thread(target=get_kar, args=(text, chat, bot,))
+                                tawd38.start()
+                            elif text.startswith('/serch'):
+                                tawd38 = Thread(target=get_srch, args=(text, chat, bot,))
+                                tawd38.start()
+                            elif text.startswith('/sargarmi'):
+                                tawd38 = Thread(target=get_sar, args=(text, chat, bot,))
+                                tawd38.start()
+                            elif text.startswith('/ghavanin'):
+                                tawd38 = Thread(target=get_gav, args=(text, chat, bot,))
+                                tawd38.start()
+                            elif text.startswith('شروع') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '':
+                                g_usvl = chat['object_guid']
+                                bot.sendMessage(chat['object_guid'], 'یادگیری فعال شد', chat['last_message']['message_id'])
+                            elif text.startswith('پایان') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl != '':
+                                g_usvl = ''
+                                bot.sendMessage(chat['object_guid'], 'یادگیری غیرفعال شد.', chat['last_message']['message_id'])  
+                            elif text.startswith('فعال') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and g_usvl == '' and test_usvl == '':
+                                test_usvl = chat['object_guid']
+                                bot.sendMessage(chat['object_guid'], 'پاسخگویی فعال شد.', chat['last_message']['message_id'])
+                            elif text.startswith('غیرفعال') and chat['abs_object']['type'] == 'Group' and chat['last_message']['author_object_guid'] in qrozAdmins and test_usvl == chat['object_guid']:
+                                test_usvl = ''
+                                bot.sendMessage(chat['object_guid'], 'پاسخگویی غیرفعال شد.', chat['last_message']['message_id'])   
+                            elif text.startswith('!backup') and chat['object_guid'] in qrozAdmins:
+                                tawd44 = Thread(target=get_backup, args=(text, chat, bot,))
+                                tawd44.start()
+                            elif chat['object_guid'] == g_usvl and chat['last_message']['author_object_guid'] != 'u0DcA7S0def8612b339488bb4fe40f50' and chat['abs_object']['type'] == 'Group':
+                                tawd42 = Thread(target=usvl_save_data, args=(text, chat, bot,))
+                                tawd42.start()
+                            elif test_usvl == chat['object_guid'] and chat['last_message']['author_object_guid'] != 'u0DcA7S0def8612b339488bb4fe40f50' and chat['abs_object']['type'] == 'Group':
+                                print('usvl tested')
+                                tawd43 = Thread(target=usvl_test_data, args=(text, chat, bot,))
+                                tawd43.start()
                             list_message_seened.append(m_id)
                     elif 'SendMessages' in access and chat['last_message']['type'] == 'Other' and text.strip() != '' and chat['abs_object']['type'] == 'Group' and chat['abs_object']['type'] == 'Group':
                         text = text.strip()
@@ -1198,10 +1217,10 @@ while(2 > 1):
                                 tawd40.start()
                                 list_message_seened.append(m_id)
         else:
-            print('no update ')
+            print('چت ها را آپدیت کنید ')
     except:
-        print('qroz err koli')
-    time_reset2 = math.floor(datetime.datetime.today().timestamp())
+        print('ارور کلی')
+    time_reset2 = random._floor(datetime.datetime.today().timestamp())
     if list_message_seened != [] and time_reset2 > time_reset:
         list_message_seened = []
-        time_reset = math.floor(datetime.datetime.today().timestamp()) + 350
+        time_reset = random._floor(datetime.datetime.today().timestamp()) + 350
